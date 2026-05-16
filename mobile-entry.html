@@ -1,0 +1,371 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>中南大学智慧学工 · 学生移动端</title>
+<style>
+:root{--blue:#165DFF;--blue2:#4080FF;--cyan:#36CFC9;--orange:#FF7D00;--red:#F53F3F;--green:#00B42A;--purple:#722ED1;--gray:#86909C;--bg:#F5F7FA;--card:#fff;--border:#F2F3F5;--safe-b:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:var(--bg);color:#1D2129;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;max-width:483px;margin:0 auto;overflow-x:hidden;padding-bottom:calc(60px + var(--safe-b))}
+a{color:var(--blue);text-decoration:none}
+img{max-width:100%;display:block}
+
+/* ===== 移动端状态栏 ===== */
+.m-statusbar{height:44px;background:linear-gradient(135deg,#0E42B5,#165DFF);display:flex;align-items:center;justify-content:space-between;padding:0 16px;color:#fff;font-size:12px;position:sticky;top:0;z-index:100}
+.m-statusbar .time{font-weight:600}
+.m-statusbar .icons{display:flex;gap:6px;align-items:center}
+
+/* ===== 移动端导航头 ===== */
+.m-header{background:linear-gradient(135deg,#165DFF 0%,#36CFC9 100%);color:#fff;padding:16px 16px 20px;position:relative;overflow:hidden}
+.m-header::after{content:"";position:absolute;bottom:-20px;right:-20px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.08)}
+.m-header .user{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.m-header .ava{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#B3E5FC,#4DB6AC);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.m-header .info{flex:1;min-width:0}
+.m-header .info .nm{font-size:17px;font-weight:700;letter-spacing:.5px}
+.m-header .info .desc{font-size:12px;opacity:.85;margin-top:2px}
+.m-header .msg{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:16px;position:relative;color:#fff}
+.m-header .msg .dot{position:absolute;top:2px;right:4px;width:8px;height:8px;border-radius:50%;background:var(--red);border:1.5px solid #165DFF}
+
+/* ===== 搜索栏 ===== */
+.m-search{margin:-12px 16px 0;position:relative;z-index:10}
+.m-search .bar{display:flex;align-items:center;gap:8px;background:#fff;border-radius:999px;padding:0 6px 0 14px;height:42px;box-shadow:0 4px 16px rgba(22,93,255,.12)}
+.m-search .ic{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.m-search input{flex:1;border:0;outline:0;font-size:13px;color:#1D2129;background:transparent;height:100%;min-width:0}
+.m-search input::placeholder{color:#C9CDD4}
+.m-search .go{width:32px;height:32px;border-radius:50%;background:var(--blue);color:#fff;border:0;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+
+/* ===== 统计概览 ===== */
+.m-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:16px 16px 0}
+.m-stat{background:#fff;border-radius:12px;padding:12px 8px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.m-stat .val{font-size:18px;font-weight:700;color:var(--blue)}
+.m-stat .lb{font-size:10px;color:var(--gray);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ===== 快捷应用网格 ===== */
+.m-section{padding:16px}
+.m-section-ti{font-size:15px;font-weight:700;color:#1D2129;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.m-section-ti .bar{width:3px;height:14px;border-radius:2px;background:linear-gradient(180deg,var(--blue),var(--cyan))}
+.m-section-ti .more{margin-left:auto;font-size:12px;color:var(--gray);font-weight:400}
+.m-apps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.m-app{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;border-radius:10px;text-decoration:none;color:#1D2129;-webkit-user-select:none}
+.m-app:active{background:#F2F6FF}
+.m-app .ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;box-shadow:0 3px 8px rgba(0,0,0,.08)}
+.m-app .lb{font-size:11px;text-align:center;line-height:1.3}
+
+/* ===== 待办/提醒 卡片 ===== */
+.m-card{background:#fff;border-radius:14px;padding:14px;margin:0 16px 12px;box-shadow:0 1px 6px rgba(0,0,0,.04)}
+.m-card-ti{font-size:14px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.m-card-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.m-card-row:last-child{border-bottom:0}
+.m-card-row .lead{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;flex-shrink:0}
+.m-card-row .body{flex:1;min-width:0}
+.m-card-row .ttl{font-size:13px;font-weight:600;color:#1D2129;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m-card-row .sub{font-size:11px;color:var(--gray);margin-top:2px}
+.m-card-row .trail{font-size:11px;color:var(--gray);flex-shrink:0}
+.m-card-row .badge{font-size:10px;padding:2px 6px;border-radius:8px;flex-shrink:0}
+
+/* ===== Banner 滑块 ===== */
+.m-banner{margin:16px 16px 0;border-radius:14px;overflow:hidden;position:relative;height:120px;background:linear-gradient(100deg,#BDE0FE 0%,#A8C7FF 40%,#88B0F8 100%);display:flex;align-items:center;padding:0 20px}
+.m-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(to right,rgba(22,93,255,.12),transparent);pointer-events:none}
+.m-banner .t{position:relative;z-index:1}
+.m-banner h2{font-size:20px;font-weight:700;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.12)}
+.m-banner p{color:#fff;opacity:.9;font-size:12px;margin-top:4px;letter-spacing:2px}
+
+/* ===== 功能入口列表 ===== */
+.m-feature{background:#fff;border-radius:14px;margin:0 16px 12px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.04)}
+.m-feature-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);text-decoration:none;color:#1D2129}
+.m-feature-item:last-child{border-bottom:0}
+.m-feature-item:active{background:#F7F8FA}
+.m-feature-item .lead{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;flex-shrink:0}
+.m-feature-item .body{flex:1;min-width:0}
+.m-feature-item .ttl{font-size:14px;font-weight:600}
+.m-feature-item .sub{font-size:12px;color:var(--gray);margin-top:2px}
+.m-feature-item .arr{color:#C9CDD4;font-size:14px;flex-shrink:0}
+
+/* ===== 手机预览横滑 ===== */
+.m-previews{display:flex;gap:12px;overflow-x:auto;padding:0 16px 4px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scroll-padding:0 16px}
+.m-previews::-webkit-scrollbar{display:none}
+.m-preview{flex:0 0 160px;scroll-snap-align:start;background:linear-gradient(135deg,#0A1F44,#165DFF);border-radius:20px;padding:6px;box-shadow:0 6px 18px rgba(22,93,255,.2)}
+.m-preview .screen{background:var(--bg);border-radius:16px;height:280px;padding:10px;position:relative;overflow:hidden}
+.m-preview .screen .bar{height:22px;display:flex;align-items:center;justify-content:space-between;font-size:9px;color:var(--gray);padding:0 4px}
+.m-preview .screen .nav{height:28px;border-radius:8px;margin:4px 0 8px;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:10px;font-weight:600}
+.m-preview .screen .row{background:#fff;border-radius:8px;padding:6px 8px;margin-bottom:6px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.m-preview .screen .row .r-ic{width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:11px;vertical-align:middle;margin-right:6px}
+.m-preview .screen .row .r-tx{font-size:9px;color:var(--gray);margin-top:3px}
+.m-preview .screen .fab{position:absolute;bottom:10px;right:10px;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;box-shadow:0 4px 10px rgba(22,93,255,.35)}
+
+/* ===== 底部 Tab 栏 ===== */
+.m-tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:483px;height:calc(56px + var(--safe-b));padding-bottom:var(--safe-b);background:#fff;border-top:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-around;z-index:100}
+.m-tab{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;flex:1;text-decoration:none;color:var(--gray);font-size:10px;position:relative}
+.m-tab .tic{font-size:20px;height:24px;display:flex;align-items:center;justify-content:center}
+.m-tab.on{color:var(--blue);font-weight:600}
+/* AI tab 已移至悬浮球 */
+
+/* ===== 下载提示条 ===== */
+.m-download{margin:0 16px 12px;background:linear-gradient(135deg,#E8F3FF,#F2F6FF);border:1px solid #D0E4FF;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.m-download .ic{width:40px;height:40px;border-radius:10px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.m-download .body{flex:1;min-width:0}
+.m-download .body .t{font-size:13px;font-weight:600;color:#1D2129}
+.m-download .body .d{font-size:11px;color:var(--gray);margin-top:2px}
+.m-download .btn{padding:6px 12px;border-radius:999px;background:var(--blue);color:#fff;font-size:12px;font-weight:600;border:0;white-space:nowrap;flex-shrink:0}
+
+/* ===== 页脚 ===== */
+.m-foot{text-align:center;padding:20px 16px 24px;color:var(--gray);font-size:11px;line-height:1.8}
+
+/* ===== 小徽章 ===== */
+.st{padding:2px 8px;border-radius:4px;font-size:11px;display:inline-block;font-weight:500}
+.st.ok{background:#E8FFEA;color:var(--green)}
+.st.warn{background:#FFF3E8;color:var(--orange)}
+.st.err{background:#FEECEC;color:var(--red)}
+.st.new{background:#E8F3FF;color:var(--blue)}
+</style>
+</head>
+<body>
+
+<!-- 状态栏 -->
+<div class="m-statusbar">
+  <span class="time">10:27</span>
+  <span class="icons">
+    <span style="font-size:10px">●●● 5G</span>
+    <span>🔋</span>
+  </span>
+</div>
+
+<!-- 头部 -->
+<div class="m-header">
+  <div class="user">
+    <div class="ava">梧</div>
+    <div class="info">
+      <div class="nm">Hi 梧桐同学，上午好</div>
+      <div class="desc">计算机学院 · 2022 级 · 软件工程 3 班</div>
+    </div>
+    <a href="mobile/student-messages.html" class="msg">🔔<span class="dot"></span></a>
+  </div>
+</div>
+
+<!-- AI 搜索栏 -->
+<div class="m-search">
+  <form class="bar" action="mobile/ai-global-search.html">
+    <span class="ic">Ai</span>
+    <input type="text" name="q" placeholder="请假 / 综测 / 宿舍报修 / 奖学金规则">
+    <button type="submit" class="go">🔍</button>
+  </form>
+</div>
+
+<!-- 数据概览 -->
+<div class="m-stats">
+  <div class="m-stat"><div class="val" style="color:var(--blue)">3.62</div><div class="lb">GPA</div></div>
+  <div class="m-stat"><div class="val" style="color:var(--green)">18/24</div><div class="lb">二课学分</div></div>
+  <div class="m-stat"><div class="val" style="color:var(--orange)">4</div><div class="lb">获奖记录</div></div>
+  <div class="m-stat"><div class="val" style="color:var(--red)">3</div><div class="lb">待办事项</div></div>
+</div>
+
+<!-- Banner -->
+<div class="m-banner">
+  <div class="t">
+    <h2>知行合一 经世致用</h2>
+    <p>向善 求真 惟美 有容</p>
+  </div>
+</div>
+
+<!-- 快捷应用 -->
+<div class="m-section">
+  <div class="m-section-ti"><span class="bar"></span>常用功能</div>
+  <div class="m-apps">
+    <a class="m-app" href="mobile/student-leave.html"><div class="ic" style="background:linear-gradient(135deg,var(--blue),#4080FF)">🗓️</div><div class="lb">请假办理</div></a>
+    <a class="m-app" href="mobile/student-schedule.html"><div class="ic" style="background:linear-gradient(135deg,var(--cyan),#0FC6C2)">📅</div><div class="lb">日程课表</div></a>
+    <a class="m-app" href="mobile/student-grades.html"><div class="ic" style="background:linear-gradient(135deg,var(--orange),#FFA940)">📊</div><div class="lb">成绩查询</div></a>
+    <a class="m-app" href="mobile/student-funding.html"><div class="ic" style="background:linear-gradient(135deg,var(--purple),#9254DE)">💰</div><div class="lb">奖助贷勤</div></a>
+    <a class="m-app" href="mobile/student-activity-match.html"><div class="ic" style="background:linear-gradient(135deg,#F53F3F,#FF6B6B)">🏆</div><div class="lb">活动评优</div></a>
+    <a class="m-app" href="mobile/student-dorm-repair.html"><div class="ic" style="background:linear-gradient(135deg,var(--green),#36D67C)">🔧</div><div class="lb">宿舍报修</div></a>
+    <a class="m-app" href="mobile/student-second-classroom.html"><div class="ic" style="background:linear-gradient(135deg,#1890FF,#69C0FF)">🎓</div><div class="lb">第二课堂</div></a>
+    <a class="m-app" href="mobile/student-employment.html"><div class="ic" style="background:linear-gradient(135deg,#0E42B5,#165DFF)">💼</div><div class="lb">就业中心</div></a>
+  </div>
+</div>
+
+<!-- 待办提醒 -->
+<div class="m-card">
+  <div class="m-card-ti">📋 待办提醒</div>
+  <div class="m-card-row">
+    <div class="lead" style="background:var(--orange)">📎</div>
+    <div class="body">
+      <div class="ttl">综测材料补充提交</div>
+      <div class="sub">截止 2026-05-20 · 缺少竞赛证书</div>
+    </div>
+    <span class="st warn">待办</span>
+  </div>
+  <div class="m-card-row">
+    <div class="lead" style="background:var(--blue)">🗓️</div>
+    <div class="body">
+      <div class="ttl">病假申请审批中</div>
+      <div class="sub">5 月 10 日 - 12 日 · 辅导员审核中</div>
+    </div>
+    <span class="st new">审批中</span>
+  </div>
+  <div class="m-card-row">
+    <div class="lead" style="background:var(--green)">💰</div>
+    <div class="body">
+      <div class="ttl">校级一等奖学金</div>
+      <div class="sub">材料已提交 · 预计下周公示</div>
+    </div>
+    <span class="st ok">已提交</span>
+  </div>
+</div>
+
+<!-- 核心功能入口 -->
+<div class="m-section" style="padding-bottom:0">
+  <div class="m-section-ti"><span class="bar"></span>学生服务</div>
+</div>
+<div class="m-feature">
+  <a class="m-feature-item" href="mobile/student-leave.html">
+    <div class="lead" style="background:var(--blue)">🗓️</div>
+    <div class="body"><div class="ttl">在线请假办理</div><div class="sub">分步引导 · 佐证上传 · 审批进度跟踪</div></div>
+    <span class="arr">›</span>
+  </a>
+  <a class="m-feature-item" href="mobile/student-activity-match.html">
+    <div class="lead" style="background:var(--cyan)">🎭</div>
+    <div class="body"><div class="ttl">活动报名 / 评奖评优</div><div class="sub">资格预检 · 一键填单 · 冲突检测</div></div>
+    <span class="arr">›</span>
+  </a>
+  <a class="m-feature-item" href="mobile/student-dorm-repair.html">
+    <div class="lead" style="background:var(--orange)">🔧</div>
+    <div class="body"><div class="ttl">宿舍报修</div><div class="sub">拍照 AI 识别 · 位置自动定位 · 进度跟踪</div></div>
+    <span class="arr">›</span>
+  </a>
+  <a class="m-feature-item" href="mobile/ai-assistant-chat.html">
+    <div class="lead" style="background:var(--purple)">💬</div>
+    <div class="body"><div class="ttl">学工 AI 助手</div><div class="sub">智能问答 · 办理指引 · 多轮会话</div></div>
+    <span class="arr">›</span>
+  </a>
+  <a class="m-feature-item" href="mobile/student-bbs.html">
+    <div class="lead" style="background:var(--red)">📣</div>
+    <div class="body"><div class="ttl">中南心声（BBS）</div><div class="sub">建议 / 投诉 / 表扬 · AI 情感分析</div></div>
+    <span class="arr">›</span>
+  </a>
+  <a class="m-feature-item" href="mobile/student-employment.html">
+    <div class="lead" style="background:var(--green)">💼</div>
+    <div class="body"><div class="ttl">就业中心</div><div class="sub">岗位匹配 · 简历自检 · 面试辅导</div></div>
+    <span class="arr">›</span>
+  </a>
+</div>
+
+<!-- 更多服务 -->
+<div class="m-section" style="padding-bottom:0">
+  <div class="m-section-ti"><span class="bar"></span>更多服务</div>
+</div>
+<div class="m-feature">
+  <a class="m-feature-item" href="mobile/student-academic.html">
+    <div class="lead" style="background:linear-gradient(135deg,#1890FF,#69C0FF)">📚</div>
+    <div class="body"><div class="ttl">学业成长</div><div class="sub">课程规划 · 学分追踪 · 学业预警</div></div>
+    <span class="arr">›</span>
+  </a>
+  <a class="m-feature-item" href="mobile/student-scholarship.html">
+    <div class="lead" style="background:linear-gradient(135deg,var(--orange),#FFA940)">🏅</div>
+    <div class="body"><div class="ttl">奖学金查询</div><div class="sub">规则匹配 · AI 预判 · 一键申请</div></div>
+    <span class="arr">›</span>
+  </a>
+  <a class="m-feature-item" href="mobile/student-card.html">
+    <div class="lead" style="background:linear-gradient(135deg,#722ED1,#9254DE)">💳</div>
+    <div class="body"><div class="ttl">校园卡</div><div class="sub">挂失 / 充值 / 消费查询</div></div>
+    <span class="arr">›</span>
+  </a>
+  <a class="m-feature-item" href="mobile/student-lost.html">
+    <div class="lead" style="background:linear-gradient(135deg,var(--red),#FF6B6B)">🔎</div>
+    <div class="body"><div class="ttl">失物招领</div><div class="sub">发布 / 查找 · AI 图像匹配</div></div>
+    <span class="arr">›</span>
+  </a>
+  <a class="m-feature-item" href="mobile/student-life.html">
+    <div class="lead" style="background:linear-gradient(135deg,#36CFC9,#0FC6C2)">🍴</div>
+    <div class="body"><div class="ttl">生活服务</div><div class="sub">食堂 / 快递 / 场馆预约</div></div>
+    <span class="arr">›</span>
+  </a>
+  <a class="m-feature-item" href="mobile/student-military.html">
+    <div class="lead" style="background:linear-gradient(135deg,#0E42B5,#165DFF)">🎖️</div>
+    <div class="body"><div class="ttl">特色业务</div><div class="sub">征兵 / 退伍 / 复学 / 国防教育</div></div>
+    <span class="arr">›</span>
+  </a>
+</div>
+
+<!-- App 下载引导 -->
+<div class="m-download">
+  <div class="ic">📱</div>
+  <div class="body">
+    <div class="t">下载中南智慧学工 App</div>
+    <div class="d">支持 iOS 13+ / Android 10+</div>
+  </div>
+  <button class="btn" onclick="alert('请扫描二维码下载')">下载</button>
+</div>
+
+<!-- 界面预览（横向滑动） -->
+<div class="m-section" style="padding-bottom:0">
+  <div class="m-section-ti"><span class="bar"></span>界面预览 <span class="more">左滑查看 →</span></div>
+</div>
+<div class="m-previews">
+  <!-- AI 助手 -->
+  <div class="m-preview">
+    <div class="screen">
+      <div class="bar"><span>9:41</span><span>5G</span></div>
+      <div class="nav" style="background:linear-gradient(90deg,var(--blue),var(--cyan))">学工 AI 助手</div>
+      <div class="row"><span class="r-ic" style="background:var(--blue)">💬</span><div class="r-tx">今日待谈话 5 位</div></div>
+      <div class="row"><span class="r-ic" style="background:var(--cyan)">🎯</span><div class="r-tx">新增 3 条学风预警</div></div>
+      <div class="row"><span class="r-ic" style="background:var(--orange)">📝</span><div class="r-tx">4 份材料等待复核</div></div>
+      <div class="fab">AI</div>
+    </div>
+  </div>
+  <!-- 请假办理 -->
+  <div class="m-preview">
+    <div class="screen">
+      <div class="bar"><span>9:41</span><span>5G</span></div>
+      <div class="nav" style="background:linear-gradient(90deg,var(--orange),#FFA940)">请假办理</div>
+      <div class="row"><span class="r-ic" style="background:var(--orange)">🗓️</span><div class="r-tx">选择请假类型</div></div>
+      <div class="row"><span class="r-ic" style="background:var(--blue)">🕐</span><div class="r-tx">填写时间范围</div></div>
+      <div class="row"><span class="r-ic" style="background:var(--green)">📎</span><div class="r-tx">上传佐证材料</div></div>
+      <div class="fab">AI</div>
+    </div>
+  </div>
+  <!-- 活动匹配 -->
+  <div class="m-preview">
+    <div class="screen">
+      <div class="bar"><span>9:41</span><span>5G</span></div>
+      <div class="nav" style="background:linear-gradient(90deg,var(--cyan),#0FC6C2)">活动匹配</div>
+      <div class="row"><span class="r-ic" style="background:var(--purple)">🏆</span><div class="r-tx">ACM 程序设计竞赛</div></div>
+      <div class="row"><span class="r-ic" style="background:var(--orange)">🎭</span><div class="r-tx">校园歌手大赛</div></div>
+      <div class="row"><span class="r-ic" style="background:var(--blue)">💼</span><div class="r-tx">2026 春招双选会</div></div>
+      <div class="fab">AI</div>
+    </div>
+  </div>
+  <!-- 宿舍报修 -->
+  <div class="m-preview">
+    <div class="screen">
+      <div class="bar"><span>9:41</span><span>5G</span></div>
+      <div class="nav" style="background:linear-gradient(90deg,var(--red),var(--orange))">宿舍报修</div>
+      <div class="row"><span class="r-ic" style="background:var(--red)">🔧</span><div class="r-tx">报修单已生成</div></div>
+      <div class="row"><span class="r-ic" style="background:var(--orange)">📸</span><div class="r-tx">拍照识别：电路故障</div></div>
+      <div class="row"><span class="r-ic" style="background:var(--blue)">📍</span><div class="r-tx">位置：A栋 301</div></div>
+      <div class="fab">AI</div>
+    </div>
+  </div>
+</div>
+
+<!-- 页脚 -->
+<div class="m-foot">
+  <a href="index.html">站点地图</a> · <a href="help.html">帮助中心</a> · <a href="feedback.html">意见反馈</a>
+  <div style="margin-top:6px">© 2026 中南大学 智慧学工 AI 助手<br>产品原型 V1.0 · 仅演示用途</div>
+</div>
+
+<!-- 底部 Tab 栏 -->
+<div class="m-tabbar">
+  <a class="m-tab on" href="mobile-entry.html"><span class="tic">🏠</span>首页</a>
+  <a class="m-tab" href="mobile/student-schedule.html"><span class="tic">📅</span>课表</a>
+  <a class="m-tab" href="mobile/student-messages.html"><span class="tic">📨</span>消息</a>
+  <a class="m-tab" href="mobile/student-profile.html"><span class="tic">👤</span>我的</a>
+</div>
+
+<script src="ai-client.js"></script>
+<script src="ai-search-popup.js"></script>
+<script src="ai-float-ball.js"></script>
+<script src="ai-module-sdk.js"></script>
+</body>
+</html>

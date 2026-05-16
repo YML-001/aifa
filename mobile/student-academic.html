@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>学业成长 · 中南大学智慧学工</title>
+<link rel="stylesheet" href="mobile-common.css">
+<style>
+.course-item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+.course-item:last-child{border-bottom:0}
+.course-item .lead{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;flex-shrink:0}
+.course-item .body{flex:1;min-width:0}
+.course-item .ttl{font-size:13px;font-weight:600;color:#1D2129}
+.course-item .meta{font-size:11px;color:var(--gray);margin-top:2px}
+.course-item .trail{font-size:12px;font-weight:600;flex-shrink:0;color:var(--blue)}
+.plan-goal{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+.plan-goal:last-child{border-bottom:0}
+.plan-goal .ck{width:18px;height:18px;border-radius:50%;border:2px solid #E5E6EB;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px}
+.plan-goal .ck.done{background:var(--green);border-color:var(--green);color:#fff}
+.ai-tip{background:linear-gradient(135deg,#E8F3FF,#F2F6FF);border:1px solid #D0E4FF;border-radius:14px;padding:14px;margin-bottom:12px}
+.ai-tip .hd{font-size:14px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.ai-tip .tip-item{font-size:12px;color:#4E5969;padding:4px 0;line-height:1.6}
+.tab-panels .panel{display:none}
+.tab-panels .panel.on{display:block}
+.warn-item{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+.warn-item:last-child{border-bottom:0}
+.warn-item .wi{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.warn-item .wc{flex:1}
+.warn-item .wt{font-size:13px;font-weight:600;color:#1D2129}
+.warn-item .wd{font-size:11px;color:var(--gray);margin-top:2px}
+</style>
+</head>
+<body>
+
+<div class="m-nav">
+  <a class="back" href="../mobile-entry.html">‹</a>
+  <div class="title">学业成长</div>
+  <span class="action">📊</span>
+</div>
+
+<!-- KPIs -->
+<div class="m-body" style="padding-bottom:0">
+  <div class="m-kpis">
+    <div class="m-kpi">
+      <div class="val" style="color:var(--blue)">3.62</div>
+      <div class="lb">GPA</div>
+      <div class="delta up">↑ 0.08</div>
+    </div>
+    <div class="m-kpi">
+      <div class="val" style="color:var(--cyan)">42<span style="font-size:12px;color:var(--gray)">/120</span></div>
+      <div class="lb">必修学分</div>
+      <div class="delta">35%</div>
+    </div>
+    <div class="m-kpi">
+      <div class="val" style="color:var(--purple)">6<span style="font-size:12px;color:var(--gray)">/30</span></div>
+      <div class="lb">选修学分</div>
+      <div class="delta">20%</div>
+    </div>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="m-tabs" id="acad-tabs">
+  <a class="on" data-tab="progress">课程进度</a>
+  <a data-tab="warning">学业预警</a>
+  <a data-tab="plan">学习计划</a>
+</div>
+
+<div class="m-body tab-panels">
+
+  <!-- 课程进度 -->
+  <div class="panel on" id="panel-progress">
+    <div class="m-card">
+      <div class="m-card-ti"><span class="bar"></span> 本学期课程进度</div>
+
+      <div class="course-item">
+        <div class="lead" style="background:var(--blue)">📐</div>
+        <div class="body">
+          <div class="ttl">高等数学 A（下）</div>
+          <div class="meta">已完成 12/16 章节</div>
+          <div class="m-progress mt4"><span style="width:75%"></span></div>
+        </div>
+        <div class="trail">75%</div>
+      </div>
+
+      <div class="course-item">
+        <div class="lead" style="background:var(--cyan)">💻</div>
+        <div class="body">
+          <div class="ttl">数据结构与算法</div>
+          <div class="meta">已完成 10/14 章节</div>
+          <div class="m-progress mt4"><span style="width:71%"></span></div>
+        </div>
+        <div class="trail">71%</div>
+      </div>
+
+      <div class="course-item">
+        <div class="lead" style="background:var(--purple)">⚡</div>
+        <div class="body">
+          <div class="ttl">大学物理（二）</div>
+          <div class="meta">已完成 8/12 章节</div>
+          <div class="m-progress mt4"><span style="width:67%"></span></div>
+        </div>
+        <div class="trail">67%</div>
+      </div>
+
+      <div class="course-item">
+        <div class="lead" style="background:var(--orange)">🌐</div>
+        <div class="body">
+          <div class="ttl">大学英语（四）</div>
+          <div class="meta">已完成 9/12 单元</div>
+          <div class="m-progress mt4"><span style="width:75%"></span></div>
+        </div>
+        <div class="trail">75%</div>
+      </div>
+
+      <div class="course-item">
+        <div class="lead" style="background:var(--green)">🏛️</div>
+        <div class="body">
+          <div class="ttl">马克思主义基本原理</div>
+          <div class="meta">已完成 6/10 章节</div>
+          <div class="m-progress mt4"><span style="width:60%"></span></div>
+        </div>
+        <div class="trail">60%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 学业预警 -->
+  <div class="panel" id="panel-warning">
+    <div class="m-card">
+      <div class="m-card-ti"><span class="bar"></span> 预警提醒</div>
+
+      <div class="warn-item">
+        <div class="wi" style="background:#FFF3E8">⚠️</div>
+        <div class="wc">
+          <div class="wt">大学物理（二）出勤率偏低</div>
+          <div class="wd">当前出勤率 78%，低于 85% 预警线。已缺课 4 次，请注意出勤。</div>
+        </div>
+      </div>
+
+      <div class="warn-item">
+        <div class="wi" style="background:#E8F3FF">💡</div>
+        <div class="wc">
+          <div class="wt">高等数学 A 作业完成率待提高</div>
+          <div class="wd">近 3 次作业平均分 72，建议加强练习。每周答疑时间：周三 19:00-21:00</div>
+        </div>
+      </div>
+
+      <div class="warn-item">
+        <div class="wi" style="background:#E8FFEA">✅</div>
+        <div class="wc">
+          <div class="wt">学分修读进度正常</div>
+          <div class="wd">当前已修 48 学分，达到培养方案第四学期要求（≥45 学分）。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 学习计划 -->
+  <div class="panel" id="panel-plan">
+    <div class="m-card">
+      <div class="m-card-ti"><span class="bar"></span> 本周学习目标</div>
+      <div class="plan-goal">
+        <div class="ck done">✓</div>
+        <span>完成高数第 13 章课后习题</span>
+      </div>
+      <div class="plan-goal">
+        <div class="ck done">✓</div>
+        <span>数据结构：实现二叉树遍历代码</span>
+      </div>
+      <div class="plan-goal">
+        <div class="ck"></div>
+        <span>大学物理实验报告 #4</span>
+      </div>
+      <div class="plan-goal">
+        <div class="ck"></div>
+        <span>英语四级真题模拟 × 2 套</span>
+      </div>
+      <div class="plan-goal">
+        <div class="ck"></div>
+        <span>马原读书笔记：第 7 章</span>
+      </div>
+    </div>
+
+    <div class="ai-tip">
+      <div class="hd">🤖 AI 学习建议</div>
+      <div class="tip-item">📌 <strong>高数重点</strong>：第 13 章多元函数微分学是期末必考内容，建议结合课后例题反复练习。</div>
+      <div class="tip-item">📌 <strong>物理出勤</strong>：出勤率接近预警线，后续 4 周务必全勤，同时建议参加周五答疑。</div>
+      <div class="tip-item">📌 <strong>四级备考</strong>：距考试还有 32 天，听力和阅读每日各练 30 分钟效果最佳。</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="m-foot" style="padding:16px 14px">
+  © 2026 中南大学 智慧学工 AI 助手<br>产品原型 V1.0 · 仅演示用途
+</div>
+
+<div class="m-tabbar">
+  <a class="m-tab" href="../mobile-entry.html"><span class="tic">🏠</span>首页</a>
+  <a class="m-tab" href="student-schedule.html"><span class="tic">📅</span>课表</a>
+  <a class="m-tab" href="student-messages.html"><span class="tic">📨</span>消息</a>
+  <a class="m-tab" href="student-profile.html"><span class="tic">👤</span>我的</a>
+</div>
+
+<script src="../ai-client.js"></script>
+<script src="../ai-search-popup.js"></script>
+<script src="../ai-float-ball.js"></script>
+<script src="../ai-module-sdk.js"></script>
+<script src="../ai-page-enhance.js"></script>
+<script>
+(function(){
+  var tabs = document.querySelectorAll('#acad-tabs a');
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(e){
+      e.preventDefault();
+      tabs.forEach(function(x){ x.classList.remove('on'); });
+      t.classList.add('on');
+      document.querySelectorAll('.tab-panels .panel').forEach(function(p){ p.classList.remove('on'); });
+      document.getElementById('panel-' + t.dataset.tab).classList.add('on');
+    });
+  });
+})();
+</script>
+</body>
+</html>

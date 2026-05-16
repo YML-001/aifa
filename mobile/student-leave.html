@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>在线请假办理 · 中南大学智慧学工</title>
+<link rel="stylesheet" href="mobile-common.css">
+<style>
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.kpi-item{background:#fff;border-radius:12px;padding:14px 10px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.kpi-item .v{font-size:22px;font-weight:700}
+.kpi-item .l{font-size:10px;color:var(--gray);margin-top:2px}
+.ai-box{background:linear-gradient(135deg,#E8F3FF,#F2F6FF);border:1px solid #D0E4FF;border-radius:14px;padding:16px;margin-bottom:14px}
+.ai-box .hd{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;margin-bottom:10px}
+.ai-box .hd .dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.ai-box textarea{width:100%;min-height:72px;border:1px solid #D0E4FF;border-radius:10px;padding:10px 12px;font-size:14px;font-family:inherit;resize:vertical;outline:0;background:#fff}
+.ai-box textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(22,93,255,.1)}
+.ai-box .tip{font-size:11px;color:var(--gray);margin-top:6px}
+.result-wrap{display:none;background:#fff;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 1px 6px rgba(0,0,0,.04);border-left:3px solid var(--blue)}
+.r-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+.r-row:last-child{border-bottom:0}
+.r-row .k{color:var(--gray);flex-shrink:0;width:70px}
+.r-row .v{flex:1;text-align:right;font-weight:500;color:#1D2129}
+#r-alerts{margin-top:8px}
+.trace-tag{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;background:#E8F3FF;color:var(--blue)}
+.progress-card{background:linear-gradient(135deg,#FFF7E6,#FFFBEF);border-radius:14px;padding:16px;margin-bottom:14px;border-left:3px solid var(--orange);box-shadow:0 1px 6px rgba(0,0,0,.04)}
+.record-item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+.record-item:last-child{border-bottom:0}
+.record-item .ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;flex-shrink:0}
+.record-item .bd{flex:1;min-width:0}
+.record-item .t{font-size:13px;font-weight:600;color:#1D2129}
+.record-item .d{font-size:11px;color:var(--gray);margin-top:2px}
+.record-item .tr{flex-shrink:0}
+.btn-row{display:flex;gap:8px;margin-top:12px}
+.btn-row .m-btn{flex:1}
+</style>
+</head>
+<body>
+
+<div class="m-nav">
+  <a class="back" href="../mobile-entry.html">‹</a>
+  <div class="title">在线请假办理</div>
+  <span class="action">📋</span>
+</div>
+
+<div class="m-body">
+
+  <!-- KPI -->
+  <div class="kpi-row">
+    <div class="kpi-item"><div class="v" style="color:var(--blue)">4</div><div class="l">本学期请假</div></div>
+    <div class="kpi-item"><div class="v" style="color:var(--orange)">6.5</div><div class="l">累计天数</div></div>
+    <div class="kpi-item"><div class="v" style="color:var(--cyan)">1</div><div class="l">审批中</div></div>
+  </div>
+
+  <!-- AI 一句话请假 -->
+  <div class="ai-box">
+    <div class="hd"><span class="dot"></span> AI 一句话请假</div>
+    <textarea id="leave-desc" placeholder="例：我感冒发烧了，想请 2 天病假去医院看看"></textarea>
+    <div class="tip">💡 自然语言输入，AI 自动识别请假类型、时间、审批链路</div>
+    <button id="leave-btn" class="m-btn m-btn-primary" style="margin-top:10px">✨ AI 生成请假单</button>
+  </div>
+
+  <!-- AI 生成结果 -->
+  <div class="result-wrap" id="leave-result-wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <span style="font-size:14px;font-weight:700">📝 AI 生成结果</span>
+      <span class="trace-tag" id="leave-trace">Demo · 本地解析</span>
+    </div>
+    <div class="r-row"><span class="k">请假类型</span><span class="v" id="r-type">—</span></div>
+    <div class="r-row"><span class="k">请假天数</span><span class="v" id="r-days">—</span></div>
+    <div class="r-row"><span class="k">开始时间</span><span class="v" id="r-start">—</span></div>
+    <div class="r-row"><span class="k">结束时间</span><span class="v" id="r-end">—</span></div>
+    <div class="r-row"><span class="k">请假事由</span><span class="v" id="r-reason">—</span></div>
+    <div class="r-row"><span class="k">佐证材料</span><span class="v" id="r-proof">—</span></div>
+    <div class="r-row"><span class="k">审批链路</span><span class="v" id="r-flow">—</span></div>
+    <div id="r-alerts"></div>
+    <div class="btn-row">
+      <button class="m-btn m-btn-primary m-btn-sm" id="leave-submit" onclick="alert('已提交请假申请（演示）')">📤 提交申请</button>
+      <button class="m-btn m-btn-outline m-btn-sm" id="leave-redo">🔄 重新生成</button>
+      <button class="m-btn m-btn-ghost m-btn-sm" id="leave-clear">✕ 清空</button>
+    </div>
+  </div>
+
+  <!-- 当前审批进度 -->
+  <div class="progress-card">
+    <div class="m-card-ti"><span class="bar"></span> 当前审批进度</div>
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
+      <span class="m-badge m-badge-orange">事假</span>
+      <span style="font-size:13px;font-weight:600">LV2026042301</span>
+      <span class="m-st warn">审批中</span>
+    </div>
+    <div class="muted" style="margin-bottom:4px">2026-04-25 08:00 → 2026-04-27 18:00（3天）</div>
+    <div class="muted" style="margin-bottom:12px">事由：家中长辈身体不适，需回家探望并协助就医</div>
+    <div class="m-timeline">
+      <div class="m-tl-item ok">
+        <div class="t">✅ AI 预审通过</div>
+        <div class="d">04-23 14:12 · 自动校验无冲突</div>
+      </div>
+      <div class="m-tl-item ok">
+        <div class="t">✅ 辅导员审批通过</div>
+        <div class="d">04-23 16:30 · 李明辉老师已批准</div>
+      </div>
+      <div class="m-tl-item">
+        <div class="t">⏳ 学院副书记审批</div>
+        <div class="d">等待中 · 预计 1 个工作日</div>
+      </div>
+      <div class="m-tl-item wait">
+        <div class="t">销假确认</div>
+        <div class="d">返校后需到辅导员处确认</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 最近请假记录 -->
+  <div class="m-card">
+    <div class="m-card-ti"><span class="bar"></span> 最近请假记录</div>
+
+    <div class="record-item">
+      <div class="ico" style="background:var(--blue)">🏠</div>
+      <div class="bd">
+        <div class="t">事假 · 3 天</div>
+        <div class="d">04-25 ~ 04-27 · 家中长辈就医</div>
+      </div>
+      <div class="tr"><span class="m-st warn">审批中</span></div>
+    </div>
+
+    <div class="record-item">
+      <div class="ico" style="background:var(--red)">🏥</div>
+      <div class="bd">
+        <div class="t">病假 · 2 天</div>
+        <div class="d">04-10 ~ 04-11 · 感冒发烧就诊</div>
+      </div>
+      <div class="tr"><span class="m-st ok">已销假</span></div>
+    </div>
+
+    <div class="record-item">
+      <div class="ico" style="background:var(--cyan)">🏆</div>
+      <div class="bd">
+        <div class="t">公假 · 1 天</div>
+        <div class="d">03-20 · ACM 省赛选拔</div>
+      </div>
+      <div class="tr"><span class="m-st ok">已销假</span></div>
+    </div>
+
+    <div class="record-item">
+      <div class="ico" style="background:var(--red)">🏥</div>
+      <div class="bd">
+        <div class="t">病假 · 半天</div>
+        <div class="d">03-05 · 肠胃不适就诊</div>
+      </div>
+      <div class="tr"><span class="m-st ok">已销假</span></div>
+    </div>
+  </div>
+
+  <div class="m-foot">
+    © 2026 中南大学 智慧学工 AI 助手<br>产品原型 V1.0 · 仅演示用途
+  </div>
+</div>
+
+<!-- tabbar -->
+<div class="m-tabbar">
+  <a class="m-tab" href="../mobile-entry.html"><span class="tic">🏠</span>首页</a>
+  <a class="m-tab" href="student-schedule.html"><span class="tic">📅</span>课表</a>
+  <a class="m-tab" href="student-messages.html"><span class="tic">📨</span>消息</a>
+  <a class="m-tab" href="student-profile.html"><span class="tic">👤</span>我的</a>
+</div>
+
+<script src="../ai-client.js"></script>
+<script src="../ai-search-popup.js"></script>
+<script src="../ai-float-ball.js"></script>
+<script src="../ai-module-sdk.js"></script>
+<script>
+(function(){
+  function $(id){ return document.getElementById(id); }
+
+  function fallbackParse(desc){
+    var type='事假', proof='个人情况说明';
+    if(/感冒|发烧|病|医|不适|复诊|诊断/.test(desc)){ type='病假'; proof='医院门诊病历 / 诊断证明'; }
+    else if(/比赛|竞赛|公出|代表|公务|省赛|决赛|答辩/.test(desc)){ type='公假'; proof='上级单位公函 / 学校选拔文件'; }
+    var m = desc.match(/(\d+)\s*(天|日)/);
+    var days = m? parseInt(m[1],10) : 1;
+    if(/半天|上午|下午/.test(desc)) days = 0.5;
+    var now = new Date(), start = new Date(now.getTime()+24*3600*1000);
+    var end = new Date(start.getTime()+ Math.round(days)*24*3600*1000);
+    return {
+      type: type, days: days,
+      startAt: start.toISOString().slice(0,10)+' 08:00',
+      endAt:   end.toISOString().slice(0,10)+' 18:00',
+      reason:  desc,
+      proof:   proof,
+      flow:    days>3 ? 'AI 预审 → 辅导员 → 学院副书记' : 'AI 预审 → 辅导员',
+      alerts:  days>3 ? ['⚠️ 请假 >3 天需院级审批，可能加 1 个工作日'] : ['✓ 请假 ≤3 天仅需辅导员审批']
+    };
+  }
+
+  function render(r, demo){
+    $('leave-result-wrap').style.display='';
+    $('r-type').textContent = r.type;
+    $('r-days').textContent = r.days + ' 天';
+    $('r-start').textContent = r.startAt;
+    $('r-end').textContent = r.endAt;
+    $('r-reason').textContent = r.reason;
+    $('r-proof').textContent = r.proof;
+    $('r-flow').textContent = r.flow;
+    $('leave-trace').textContent = demo ? 'Demo · 本地解析' : 'Live · AI 生成';
+    var box = $('r-alerts'); box.innerHTML='';
+    (r.alerts||[]).forEach(function(a){
+      var d = document.createElement('div');
+      d.style.cssText='padding:8px 12px;border-radius:8px;background:'+(/⚠|错|警/.test(a)?'#FFF3E8;color:#FF7D00':'#E8FFEA;color:#00B42A')+';font-size:12px;margin-top:6px';
+      d.textContent = a;
+      box.appendChild(d);
+    });
+    $('leave-result-wrap').scrollIntoView({behavior:'smooth',block:'center'});
+  }
+
+  async function gen(){
+    var q = $('leave-desc').value.trim();
+    if(!q){ alert('请先描述一下请假情况'); return; }
+    $('leave-btn').disabled = true;
+    $('leave-btn').textContent = 'AI 识别中…';
+    try{
+      var mode = AI.effectiveMode();
+      if(mode==='live'){
+        var sys = '你是智慧学工系统的请假 AI 助手，从学生自然语言描述中抽取结构化请假单。只返回 JSON（不要 Markdown 代码块围栏、不要任何前后解释），字段严格如下：{"type":"事假|病假|公假","days":数值(天数),"startAt":"YYYY-MM-DD HH:mm","endAt":"YYYY-MM-DD HH:mm","reason":"改写后的正式事由<=40字","proof":"需要的佐证材料","flow":"审批路径","alerts":["规则提醒/风险提示1","提醒2"]}';
+        var r = await AI.chat(
+          [{role:'system',content:sys},{role:'user',content:q}], {}
+        );
+        var text = (r.text||'').trim().replace(/\x60/g,'').replace(/^json\s*/i,'').trim();
+        try{ render(JSON.parse(text), false); }
+        catch(e){ render(fallbackParse(q), true); }
+      } else {
+        await new Promise(function(res){ setTimeout(res, 600); });
+        render(fallbackParse(q), true);
+      }
+    }catch(e){
+      alert('AI 调用失败，已使用本地解析：'+(e.message||e));
+      render(fallbackParse(q), true);
+    }finally{
+      $('leave-btn').disabled = false;
+      $('leave-btn').textContent = '✨ AI 生成请假单';
+    }
+  }
+
+  $('leave-btn').onclick = gen;
+  $('leave-redo').onclick = gen;
+  $('leave-clear').onclick = function(){
+    $('leave-desc').value='';
+    $('leave-result-wrap').style.display='none';
+  };
+})();
+</script>
+</body>
+</html>

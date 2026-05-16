@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 直达角色梳理 · 中南大学智慧学工 AI 助手</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Microsoft YaHei","PingFang SC","Source Han Sans CN","Segoe UI",sans-serif;background:#F5F7FA;color:#1D2129;font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:#165DFF;text-decoration:none}
+a:hover{color:#4080FF;text-decoration:underline}
+button,.btn{cursor:pointer;border:0;outline:0;font-family:inherit}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:8px;font-size:14px;transition:all .18s;text-decoration:none}
+.btn:hover{text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,#165DFF 0%,#4080FF 100%);color:#fff;box-shadow:0 2px 8px rgba(22,93,255,.25)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(22,93,255,.35);color:#fff}
+.btn-outline{background:#fff;color:#165DFF;border:1px solid #165DFF}
+.btn-outline:hover{background:#E8F3FF;color:#165DFF}
+.btn-ghost{background:#F2F3F5;color:#4E5969}
+.btn-ghost:hover{background:#E5E6EB;color:#4E5969}
+.btn-warn{background:linear-gradient(135deg,#FF7D00,#FFA940);color:#fff}
+.btn-warn:hover{color:#fff}
+.btn-danger{background:#F53F3F;color:#fff}
+.btn-sm{padding:5px 12px;font-size:12px;border-radius:6px}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:500}
+.badge-blue{background:#E8F3FF;color:#165DFF}
+.badge-cyan{background:#E5FFFB;color:#0FC6C2}
+.badge-orange{background:#FFF3E8;color:#FF7D00}
+.badge-red{background:#FEECEC;color:#F53F3F}
+.badge-green{background:#E8FFEA;color:#00B42A}
+.badge-purple{background:#F5E8FF;color:#722ED1}
+.badge-gray{background:#F2F3F5;color:#86909C}
+.tag{display:inline-block;padding:3px 10px;border-radius:12px;font-size:12px;background:#F2F3F5;color:#4E5969;margin-right:6px}
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.04);padding:20px;margin-bottom:16px;border:1px solid #F2F3F5}
+.card-title{font-size:16px;font-weight:600;color:#1D2129;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.card-title .more{font-size:12px;font-weight:400;color:#86909C}
+.card-title .more:hover{color:#165DFF}
+.muted{color:#86909C;font-size:12px}
+.sub{color:#4E5969;font-size:13px}
+table.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+table.tbl th,table.tbl td{padding:10px 12px;text-align:left;border-bottom:1px solid #F2F3F5}
+table.tbl th{background:#F7F8FA;color:#4E5969;font-weight:500;font-size:12px}
+table.tbl tr:hover td{background:#FAFBFC}
+table.tbl td .act a{margin-right:10px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:1fr 1fr 1fr}
+.g4{grid-template-columns:1fr 1fr 1fr 1fr}
+.g5{grid-template-columns:repeat(5,1fr)}
+.g6{grid-template-columns:repeat(6,1fr)}
+.g-8-4{grid-template-columns:2fr 1fr}
+.g-2-8-3{grid-template-columns:220px 1fr 280px}
+.g-2-10{grid-template-columns:220px 1fr}
+
+/* 顶栏 */
+.topbar{height:64px;background:linear-gradient(90deg,#0E42B5 0%,#165DFF 55%,#3A7DFF 100%);color:#fff;display:flex;align-items:center;padding:0 24px;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(22,93,255,.18)}
+.logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:700;letter-spacing:.5px;color:#fff;white-space:nowrap}
+.logo:hover{color:#fff;text-decoration:none}
+.logo .mark{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:18px}
+.top-nav{display:flex;gap:2px;margin-left:24px;overflow:visible;flex:1;max-width:820px;align-items:center}
+.top-nav::-webkit-scrollbar{display:none}
+.top-nav a{color:#DCE7FF;padding:8px 12px;border-radius:8px;font-size:13px;white-space:nowrap}
+.top-nav a.on,.top-nav a:hover{background:rgba(255,255,255,.18);color:#fff;text-decoration:none}
+.nav-more{position:relative}
+.nav-more>.trigger{display:inline-flex;align-items:center;gap:4px;color:#DCE7FF;padding:8px 12px;border-radius:8px;font-size:13px;white-space:nowrap;cursor:pointer}
+.nav-more:hover>.trigger,.nav-more:focus-within>.trigger{background:rgba(255,255,255,.18);color:#fff}
+.nav-more .pop{display:none;position:absolute;top:calc(100% + 8px);right:0;background:#fff;min-width:190px;border-radius:10px;box-shadow:0 10px 30px rgba(10,31,68,.18);padding:6px 0;z-index:200;border:1px solid #F2F3F5}
+.nav-more:hover .pop,.nav-more:focus-within .pop{display:block}
+.nav-more .pop::before{content:"";position:absolute;top:-14px;right:28px;border:7px solid transparent;border-bottom-color:#fff}
+.nav-more .pop a{display:flex;align-items:center;gap:8px;padding:10px 16px;color:#1D2129;font-size:13px;white-space:nowrap;border-radius:0}
+.nav-more .pop a:hover{background:#F2F6FF;color:#165DFF;text-decoration:none}
+.nav-more .pop a.on{background:#E8F3FF;color:#165DFF;font-weight:600}
+.nav-more .pop a .ic{width:18px;text-align:center}
+.top-search{width:340px;margin:0 16px;position:relative}
+.top-search input{width:100%;height:38px;border-radius:19px;border:0;padding:0 18px 0 46px;font-size:13px;background:rgba(255,255,255,.95);color:#1D2129;outline:0}
+.top-search .ai-ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#165DFF,#36CFC9);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.top-right{display:flex;align-items:center;gap:10px}
+.top-right .ic{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;position:relative;color:#fff}
+.top-right .ic:hover{background:rgba(255,255,255,.3);text-decoration:none;color:#fff}
+.top-right .dot{position:absolute;top:4px;right:6px;width:8px;height:8px;border-radius:50%;background:#F53F3F;border:1.5px solid #165DFF}
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#FFD591,#FF9A3C);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:13px;flex-shrink:0}
+.user-box{display:flex;align-items:center;gap:8px;color:#fff;cursor:pointer;padding:4px 10px;border-radius:8px;text-decoration:none}
+.user-box:hover{background:rgba(255,255,255,.1);color:#fff;text-decoration:none}
+.user-box .nm{font-size:13px;line-height:1.2}
+.user-box .role{font-size:11px;color:#C9DBFF;line-height:1.2;margin-top:2px}
+
+/* 副导航 */
+.subnav{background:#fff;padding:0 24px;height:44px;display:flex;align-items:center;gap:4px;border-bottom:1px solid #F2F3F5;position:sticky;top:64px;z-index:49;overflow-x:auto}
+.subnav::-webkit-scrollbar{display:none}
+.subnav a{color:#4E5969;padding:0 14px;height:44px;display:flex;align-items:center;font-size:13px;position:relative;white-space:nowrap}
+.subnav a:hover{color:#165DFF;text-decoration:none}
+.subnav a.on{color:#165DFF;font-weight:600}
+.subnav a.on::after{content:"";position:absolute;left:10px;right:10px;bottom:0;height:3px;border-radius:2px;background:#165DFF}
+.subnav .r{margin-left:auto;color:#86909C;font-size:12px}
+
+/* 内容区 */
+.page{max-width:1360px;margin:0 auto;padding:20px 24px 80px}
+.page-wide{max-width:1600px;margin:0 auto;padding:20px 24px 80px}
+.breadcrumb{color:#86909C;font-size:12px;margin-bottom:14px}
+.breadcrumb a{color:#86909C}
+.breadcrumb a:hover{color:#165DFF}
+.breadcrumb .sep{margin:0 6px}
+.page-title{font-size:22px;font-weight:600;margin-bottom:6px;color:#1D2129}
+.page-desc{color:#86909C;font-size:13px;margin-bottom:20px}
+
+/* 英雄头图 */
+.hero{border-radius:14px;overflow:hidden;position:relative;height:180px;background:linear-gradient(100deg,#BDE0FE 0%,#A8C7FF 40%,#88B0F8 100%);display:flex;align-items:center;padding:0 48px;margin-bottom:18px;box-shadow:0 4px 16px rgba(22,93,255,.12)}
+.hero::after{content:"";position:absolute;inset:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 200' preserveAspectRatio='xMidYMid slice'><defs><linearGradient id='m' x1='0' x2='0' y1='0' y2='1'><stop offset='0' stop-color='%23fff' stop-opacity='0'/><stop offset='1' stop-color='%23fff' stop-opacity='.55'/></linearGradient></defs><path d='M0 150 Q120 110 240 140 T480 130 T720 145 T960 125 T1200 140 L1200 200 L0 200Z' fill='url(%23m)'/><g opacity='.5'><circle cx='160' cy='100' r='32' fill='%233a9d4c'/><circle cx='210' cy='110' r='26' fill='%232e7d3c'/><rect x='530' y='80' width='36' height='70' fill='%23c94b3b'/><polygon points='510,80 586,80 548,40' fill='%23e88a1a'/><path d='M820 150 Q850 122 880 150 T940 150' fill='none' stroke='%23222' stroke-width='3'/><path d='M900 150 Q930 125 960 150 T1020 150' fill='none' stroke='%23222' stroke-width='3'/><circle cx='1070' cy='80' r='6' fill='%23fff'/><circle cx='1100' cy='70' r='5' fill='%23fff'/></g></svg>") center/cover no-repeat;pointer-events:none}
+.hero .t{position:relative;z-index:1}
+.hero h1{font-size:30px;font-weight:700;color:#fff;letter-spacing:2px;text-shadow:0 2px 10px rgba(0,0,0,.12)}
+.hero p{color:#fff;margin-top:6px;letter-spacing:4px;opacity:.92;font-size:14px}
+
+/* 问候卡 */
+.greet{display:flex;align-items:center;gap:20px;padding:18px 24px;background:#fff;border-radius:12px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.04);flex-wrap:wrap}
+.greet .hello{flex:1;min-width:220px}
+.greet .hello .hi{font-size:18px;font-weight:600}
+.greet .hello .tip{color:#86909C;font-size:12px;margin-top:2px}
+.greet .stats{display:flex;gap:22px;flex-wrap:wrap}
+.greet .stat{display:flex;align-items:center;gap:10px}
+.greet .stat .ava{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;color:#fff}
+.greet .stat .val{font-size:20px;font-weight:700;color:#1D2129;line-height:1}
+.greet .stat .lb{font-size:12px;color:#86909C;margin-top:4px}
+
+/* 应用中心 */
+.app-center{background:#fff;border-radius:12px;padding:22px 24px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.app-center h3{font-size:15px;font-weight:600;margin-bottom:16px}
+.app-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:16px}
+.app-item{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 6px;border-radius:10px;cursor:pointer;transition:all .18s;text-decoration:none;color:#1D2129}
+.app-item:hover{background:#F2F6FF;transform:translateY(-2px);text-decoration:none;color:#165DFF}
+.app-item .ic{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+.app-item .lb{font-size:13px}
+
+/* AI 浮球 */
+.ai-ball{position:fixed;right:28px;bottom:32px;z-index:80;width:88px;cursor:pointer;text-align:center;text-decoration:none}
+.ai-ball:hover{text-decoration:none}
+.ai-ball .fig{width:78px;height:78px;margin:0 auto;border-radius:50%;background:radial-gradient(circle at 30% 30%,#4080FF,#165DFF 70%);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;box-shadow:0 8px 24px rgba(22,93,255,.45);letter-spacing:1px}
+.ai-ball .fig .ai-word{line-height:1.1;font-size:13px}
+.ai-ball .fig .ai-word b{display:block;font-size:20px;letter-spacing:.5px}
+.ai-ball .tt{font-size:12px;color:#165DFF;margin-top:6px;font-weight:600}
+
+/* 列表行 */
+.list-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px dashed #F2F3F5}
+.list-row:last-child{border-bottom:0}
+.list-row .lead{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex-shrink:0}
+.list-row .body{flex:1;min-width:0}
+.list-row .ttl{font-size:14px;color:#1D2129;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.list-row .sub{color:#86909C;font-size:12px}
+.list-row .trail{color:#86909C;font-size:12px;flex-shrink:0}
+
+/* 时间轴 */
+.timeline{position:relative;padding-left:24px}
+.timeline::before{content:"";position:absolute;left:7px;top:4px;bottom:4px;width:2px;background:#E5E6EB}
+.timeline .tl-item{position:relative;margin-bottom:16px}
+.timeline .tl-item::before{content:"";position:absolute;left:-21px;top:6px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid #165DFF}
+.timeline .tl-item.ok::before{background:#00B42A;border-color:#00B42A}
+.timeline .tl-item.warn::before{background:#FF7D00;border-color:#FF7D00}
+.timeline .tl-item.wait::before{background:#fff;border-color:#C9CDD4}
+.timeline .tl-item .t{font-weight:600;font-size:13px}
+.timeline .tl-item .d{color:#86909C;font-size:12px;margin-top:2px}
+
+/* 空态 */
+.empty{padding:40px 0;text-align:center;color:#86909C}
+.empty .eic{width:120px;height:80px;margin:0 auto 10px;background:linear-gradient(135deg,#E8F3FF,#F2F6FF);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:34px}
+
+/* 侧栏布局 */
+.layout-side{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 64px)}
+.sidebar{background:#fff;border-right:1px solid #F2F3F5;padding:18px 12px;min-height:calc(100vh - 64px)}
+.sidebar .grp{color:#86909C;font-size:12px;padding:10px 12px 6px;margin-top:6px}
+.sidebar a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:#4E5969;font-size:13px;margin-bottom:2px}
+.sidebar a:hover{background:#F2F6FF;color:#165DFF;text-decoration:none}
+.sidebar a.on{background:#E8F3FF;color:#165DFF;font-weight:600}
+.sidebar a .ic{width:18px;text-align:center}
+
+/* 对话 */
+.chat{display:flex;flex-direction:column;gap:14px;padding:14px 0}
+.bubble{max-width:720px;padding:12px 16px;border-radius:12px;font-size:14px;line-height:1.7}
+.bubble.user{background:#E8F3FF;color:#1D2129;align-self:flex-end;border-bottom-right-radius:4px}
+.bubble.ai{background:#fff;border:1px solid #F2F3F5;box-shadow:0 1px 4px rgba(0,0,0,.04);border-bottom-left-radius:4px;align-self:flex-start}
+.bubble .ai-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;color:#86909C;font-size:12px}
+.bubble .ai-head .dot{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#165DFF,#36CFC9);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.chat-input{display:flex;gap:8px;padding:12px;background:#fff;border-radius:12px;border:1px solid #E5E6EB;margin-top:12px;align-items:flex-end}
+.chat-input textarea{flex:1;border:0;outline:0;resize:none;height:44px;font-family:inherit;font-size:14px;padding:8px}
+
+/* 表单 */
+.form-row{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px}
+.form-row .lb{width:120px;color:#4E5969;text-align:right;padding-top:8px;font-size:13px;flex-shrink:0}
+.form-row .lb .req{color:#F53F3F;margin-right:2px}
+.form-row .fld{flex:1}
+.input,.select,.textarea{width:100%;padding:8px 12px;border:1px solid #E5E6EB;border-radius:8px;font-size:14px;font-family:inherit;outline:0;background:#fff}
+.input:focus,.select:focus,.textarea:focus{border-color:#165DFF;box-shadow:0 0 0 3px rgba(22,93,255,.1)}
+.textarea{min-height:90px;resize:vertical}
+.help{font-size:12px;color:#86909C;margin-top:4px}
+.err{font-size:12px;color:#F53F3F;margin-top:4px}
+
+/* 徽标/chip */
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;background:#F2F3F5;border-radius:10px;color:#4E5969;font-size:12px;margin-right:6px}
+.chip.blue{background:#E8F3FF;color:#165DFF}
+.chip.cyan{background:#E5FFFB;color:#0FC6C2}
+.chip.warn{background:#FFF3E8;color:#FF7D00}
+.chip.red{background:#FEECEC;color:#F53F3F}
+.chip.green{background:#E8FFEA;color:#00B42A}
+
+/* 进度 */
+.pg{height:6px;background:#F2F3F5;border-radius:3px;overflow:hidden;margin-top:6px}
+.pg>span{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#165DFF,#36CFC9)}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+.kpi{background:#fff;border-radius:12px;padding:18px;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.kpi .lb{color:#86909C;font-size:12px}
+.kpi .val{font-size:26px;font-weight:700;margin-top:4px}
+.kpi .delta{font-size:12px;margin-top:4px}
+.kpi .delta.up{color:#00B42A}
+.kpi .delta.down{color:#F53F3F}
+.kpi .bg{position:absolute;right:-18px;bottom:-18px;width:96px;height:96px;border-radius:50%;opacity:.12}
+.kpi.b .bg{background:#165DFF}.kpi.b .val{color:#165DFF}
+.kpi.c .bg{background:#36CFC9}.kpi.c .val{color:#0FC6C2}
+.kpi.o .bg{background:#FF7D00}.kpi.o .val{color:#FF7D00}
+.kpi.r .bg{background:#F53F3F}.kpi.r .val{color:#F53F3F}
+.kpi.g .bg{background:#00B42A}.kpi.g .val{color:#00B42A}
+.kpi.p .bg{background:#722ED1}.kpi.p .val{color:#722ED1}
+
+/* foot */
+.foot{text-align:center;padding:24px;color:#86909C;font-size:12px;border-top:1px solid #F2F3F5;margin-top:40px;background:#fff}
+.foot a{margin:0 8px;color:#86909C}
+.foot a:hover{color:#165DFF}
+
+/* tabs */
+.tabs{display:flex;gap:4px;border-bottom:1px solid #F2F3F5;margin-bottom:18px;flex-wrap:wrap}
+.tabs a{padding:10px 18px;color:#4E5969;font-size:14px;border-bottom:2px solid transparent}
+.tabs a:hover{color:#165DFF;text-decoration:none}
+.tabs a.on{color:#165DFF;border-bottom-color:#165DFF;font-weight:600}
+
+/* 过滤条 */
+.filter{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:#fff;padding:14px 18px;border-radius:10px;margin-bottom:14px;border:1px solid #F2F3F5}
+.filter .lb{color:#86909C;font-size:12px;margin-right:4px}
+.filter .sp{flex:1}
+.filter input,.filter select{padding:6px 10px;border:1px solid #E5E6EB;border-radius:6px;font-size:13px;font-family:inherit;outline:0;background:#fff}
+.filter input:focus,.filter select:focus{border-color:#165DFF}
+
+/* 状态标 */
+.st{padding:2px 10px;border-radius:4px;font-size:12px;display:inline-block;font-weight:500}
+.st.ok{background:#E8FFEA;color:#00B42A}
+.st.warn{background:#FFF3E8;color:#FF7D00}
+.st.err{background:#FEECEC;color:#F53F3F}
+.st.new{background:#E8F3FF;color:#165DFF}
+.st.gray{background:#F2F3F5;color:#86909C}
+
+/* BBS */
+.post{display:flex;gap:14px;padding:16px 18px;background:#fff;border-radius:10px;margin-bottom:12px;border:1px solid #F2F3F5}
+.post .ava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#FFD591,#FF9A3C);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600}
+.post .meta{flex:1;min-width:0}
+.post .meta .nm{font-weight:600;font-size:13px}
+.post .meta .mtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.post .meta .mtop .tim{color:#86909C;font-size:12px}
+.post .meta .ttl{font-weight:600;margin:4px 0 6px;font-size:14px}
+.post .meta .ct{color:#4E5969;font-size:13px;line-height:1.6}
+.post .meta .pic{display:flex;gap:6px;margin-top:8px}
+.post .meta .pic div{width:80px;height:60px;border-radius:6px;background:linear-gradient(135deg,#88B0F8,#BDE0FE)}
+.post .meta .foo{display:flex;gap:14px;color:#86909C;font-size:12px;margin-top:10px}
+.post .meta .foo span{display:flex;align-items:center;gap:4px}
+
+/* 工具 */
+.mt0{margin-top:0!important}.mt4{margin-top:4px}.mt8{margin-top:8px}.mt12{margin-top:12px}.mt16{margin-top:16px}.mt24{margin-top:24px}
+.mb0{margin-bottom:0!important}.mb4{margin-bottom:4px}.mb8{margin-bottom:8px}.mb12{margin-bottom:12px}.mb16{margin-bottom:16px}
+.fr{display:flex;align-items:center;justify-content:space-between}
+.fx{display:flex;align-items:center;gap:10px}
+.fxw{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tac{text-align:center}.tar{text-align:right}
+.hr{height:1px;background:#F2F3F5;margin:14px 0;border:0}
+
+/* 登录 */
+.auth{min-height:100vh;display:flex;align-items:stretch;background:linear-gradient(135deg,#E8F3FF 0%,#F5F7FA 100%)}
+.auth .left{flex:1.2;position:relative;background:linear-gradient(135deg,#165DFF 0%,#36CFC9 100%);color:#fff;padding:56px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.auth .left::before{content:"";position:absolute;right:-60px;bottom:-60px;width:400px;height:400px;border-radius:50%;background:rgba(255,255,255,.1)}
+.auth .left::after{content:"";position:absolute;left:-40px;top:-40px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.08)}
+.auth .left h2{font-size:34px;letter-spacing:2px;position:relative}
+.auth .left p{margin-top:14px;max-width:420px;position:relative;opacity:.9}
+.auth .right{flex:1;display:flex;align-items:center;justify-content:center;padding:40px}
+.auth .right .box{width:400px;background:#fff;border-radius:16px;padding:36px;box-shadow:0 8px 32px rgba(22,93,255,.12)}
+.auth .right .box h3{font-size:22px;margin-bottom:6px}
+
+/* 徽章 */
+.role-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:#E8F3FF;color:#165DFF;border-radius:10px;font-size:12px}
+.lvl{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500}
+.lvl.red{background:#F53F3F;color:#fff}
+.lvl.yel{background:#FF7D00;color:#fff}
+.lvl.blu{background:#165DFF;color:#fff}
+.lvl.gra{background:#C9CDD4;color:#fff}
+
+/* 条形图 */
+.mini-bar{display:flex;align-items:flex-end;gap:8px;height:120px;padding:10px 0 24px}
+.mini-bar .b{flex:1;background:linear-gradient(180deg,#165DFF,#36CFC9);border-radius:6px 6px 0 0;position:relative;color:#fff;text-align:center;font-size:11px}
+.mini-bar .b span{position:absolute;top:-18px;left:0;right:0;color:#1D2129;font-weight:500}
+.mini-bar .b em{position:absolute;bottom:-20px;left:0;right:0;color:#86909C;font-style:normal;font-size:11px}
+
+/* 环形 */
+.ring{width:90px;height:90px;border-radius:50%;background:conic-gradient(#165DFF 0 var(--p,70%),#F2F3F5 var(--p,70%) 100%);display:flex;align-items:center;justify-content:center;position:relative}
+.ring::before{content:"";position:absolute;inset:8px;border-radius:50%;background:#fff}
+.ring span{position:relative;font-size:18px;font-weight:700;color:#165DFF}
+
+/* 提示 */
+.demo-hint{font-size:11px;color:#86909C;background:#FFFBE6;border:1px dashed #FFCE3D;padding:6px 10px;border-radius:6px;display:inline-block;margin-bottom:10px}
+
+/* AI 悬浮对话面板占位（用于演示） */
+.ai-panel{position:fixed;right:24px;bottom:130px;width:420px;max-height:620px;background:#fff;border-radius:14px;box-shadow:0 16px 40px rgba(22,93,255,.18);z-index:79;overflow:hidden;display:none}
+.ai-panel .h{background:linear-gradient(90deg,#165DFF,#36CFC9);color:#fff;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+.ai-panel .h .t{font-weight:600}
+.ai-panel .b{padding:14px 18px;max-height:460px;overflow:auto}
+
+/* 数字大屏风 */
+.screen-card{background:linear-gradient(135deg,#0A1F44 0%,#0E42B5 100%);color:#fff;border-radius:12px;padding:22px 24px}
+.screen-card .lb{color:#A8C7FF;font-size:12px}
+.screen-card .val{font-size:32px;font-weight:700;margin-top:6px;background:linear-gradient(90deg,#fff,#88B0F8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="admin/admin-home.html" class="logo"><div class="mark">学</div>中南大学智慧学工</a>
+  <div class="top-nav"><a href="admin/admin-home.html" class="">管理首页</a><a href="admin/admin-config.html" class="">配置中心</a><a href="admin/admin-bbs-monitor.html" class="">舆情监测</a><a href="admin/admin-data-analytics.html" class="">数据分析</a><a href="roles-permissions.html" class="">角色权限</a><a href="admin/config-observability.html" class="">质量运营</a><a href="admin/config-audit-log.html" class="">审计日志</a></div>
+  <div class="top-search">
+    <span class="ai-ic">Ai</span>
+    <form action="ai-global-search.html" style="margin:0"><input type="text" name="q" placeholder="AI 治理：模型路由 / 知识库 / 审计 / 舆情预警 / 灰度"></form>
+  </div>
+  <div class="top-right">
+    <a href="ai-settings.html" class="ic" title="AI 配置（接入真实大模型）" style="font-size:16px">⚙</a>
+    <a href="admin/admin-home.html" class="ic" title="消息中心">🔔<span class="dot"></span></a>
+    <a href="help.html" class="ic" title="帮助">❓</a>
+    <a href="admin/admin-home.html" class="user-box">
+      <div class="avatar" style="background:linear-gradient(135deg,#C7A0FF,#722ED1)">张</div>
+      <div>
+        <div class="nm">张管理员</div>
+        <div class="role">系统管理员</div>
+      </div>
+    </a>
+  </div>
+</div>
+<div class="page">
+<div class="breadcrumb"><a href="admin/admin-home.html">首页</a><span class="sep">/</span><a href="prd-overview.html">PRD 文档</a><span class="sep">/</span><span>AI 直达角色梳理</span></div>
+
+<div class="page-title">🔎 顶部 AI 直达角色梳理</div>
+<div class="page-desc">基于顶部搜索入口、AI 全局搜索弹层与现有模块导航，梳理学生 / 非学生两类角色可查询内容</div>
+
+<div class="kpis">
+<div class="kpi g"><div class="lb">现有可挂载项</div><div class="val">21</div><div class="delta up">已能挂到现有页面与快捷入口</div><div class="bg"></div></div>
+<div class="kpi o"><div class="lb">建议扩展项</div><div class="val">11</div><div class="delta">同模块内延展，不新增业务线</div><div class="bg"></div></div>
+<div class="kpi b"><div class="lb">角色分组</div><div class="val">2</div><div class="delta">学生 / 非学生</div><div class="bg"></div></div>
+<div class="kpi p"><div class="lb">典型入口</div><div class="val">AI 直达</div><div class="delta">单次查询 + 功能直达</div><div class="bg"></div></div>
+</div>
+
+<div class="grid g-8-4">
+<div>
+  <div class="card">
+    <div class="card-title">梳理说明</div>
+    <div class="sub" style="line-height:1.9">
+      顶部 <b>AI 直达 / AI 全局搜索</b> 更适合处理"我想查什么、我想去哪办"的单轮诉求，典型输出是
+      <span class="chip blue">给出结论</span><span class="chip cyan">给出入口</span><span class="chip warn">直接跳转办理</span>。
+      当用户需要连续追问、复杂生成、分步填单时，再转入右下角<b>学工 AI 助手</b>。
+      <br><br>
+      本页依据现有原型中的顶部占位词、角色快捷入口和帮助说明整理，扩展项只做<b>同模块内延展</b>，不凭空新增完全独立的新模块。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">学生侧可查询内容</div>
+    <table class="tbl">
+      <thead><tr><th>状态</th><th>可查询内容</th><th>对应现有模块 / 页面</th><th>建议搜索表达</th><th>备注</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>成绩、GPA、排名、挂科与补考提醒</td><td>学业成长 / 我的成绩 / student-grades.html</td><td>我的绩点是多少、补考安排、排名情况</td><td>来自学生侧成绩查询与学业成长入口</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>请假办理、销假、审批进度</td><td>在线请假 / 请假记录 / student-leave.html</td><td>我要请病假、请假进度、销假怎么操作</td><td>适合单次查询后直接办理</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>奖学金匹配、助学金、贷款、勤工助学</td><td>奖助贷勤 / 奖学金 / 助学金 / student-funding.html</td><td>我能申请什么奖学金、助学金条件、校园地贷款</td><td>当前原型已覆盖奖助贷勤一站式入口</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>综测、活动报名、评优评奖、竞赛加分</td><td>活动评奖评优 / student-activity-match.html</td><td>综测怎么算、竞赛加几分、有哪些适合我的活动</td><td>与综测和评奖评优场景强相关</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>第二课堂学分、证书、达标情况</td><td>第二课堂 / student-second-classroom.html</td><td>第二课堂还差几分、证书怎么上传</td><td>适合做学分达标类即查即达</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>宿舍报修、寝室信息、调宿相关</td><td>生活服务 / 宿舍报修 / student-dorm-repair.html</td><td>空调报修、宿舍成员、能不能申请调宿</td><td>现有页面已覆盖报修和宿舍信息</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>就业岗位、简历、三方协议、签约流程</td><td>就业中心 / student-employment.html</td><td>三方怎么签、简历优化、就业推荐信</td><td>符合毕业季高频查询</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>校园卡挂失充值、失物招领</td><td>生活服务 / student-card.html / student-lost.html</td><td>校园卡丢了怎么办、失物招领在哪里</td><td>便于形成生活服务直达</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>咨询谈心、预约辅导员、AI 深入咨询</td><td>咨询/谈心 / AI 助手 / student-consult.html</td><td>想预约辅导员、想咨询学业压力</td><td>可由直达转入多轮 AI 助手</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>个人档案、家庭信息、基础资料维护</td><td>个人档案 / student-profile.html</td><td>修改家庭住址、生源地、个人信息</td><td>适合资料类单点查询</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>学业预警、预警原因、改进建议</td><td>学业预警 / student-warning.html</td><td>为什么被预警、如何解除预警</td><td>当前原型已有明确挂载页</td></tr>
+        <tr><td><span class="badge badge-orange">建议扩展</span></td><td>缓考、补考、重修与考试违纪申诉指引</td><td>挂靠学业成长模块</td><td>缓考怎么申请、重修流程、补考时间</td><td>高校教务高频事项，仍归学业成长</td></tr>
+        <tr><td><span class="badge badge-orange">建议扩展</span></td><td>评优资格自检、推免基础条件、荣誉称号条件</td><td>挂靠活动评奖评优模块</td><td>我能不能评优、推免基础条件、三好学生要求</td><td>与现有评奖评优模块一致</td></tr>
+        <tr><td><span class="badge badge-orange">建议扩展</span></td><td>医保报销、校医院就诊、异地就医备案</td><td>挂靠生活服务模块</td><td>医保怎么报销、门诊流程、住院备案</td><td>符合多数高校生活服务需求</td></tr>
+        <tr><td><span class="badge badge-orange">建议扩展</span></td><td>心理咨询预约、危机干预转介说明</td><td>挂靠咨询谈心模块</td><td>怎么预约心理老师、心理咨询流程</td><td>建议与辅导员咨询入口形成分流</td></tr>
+        <tr><td><span class="badge badge-orange">建议扩展</span></td><td>离校返校、节假日去向、晚归报备</td><td>挂靠请假与宿舍管理模块</td><td>五一离校报备、返校登记、晚归说明</td><td>适合节假日和校园管理场景</td></tr>
+        <tr><td><span class="badge badge-orange">建议扩展</span></td><td>毕业手续、离校清单、档案与户口去向</td><td>挂靠就业中心与个人档案模块</td><td>毕业离校流程、档案寄到哪里、户口迁移</td><td>面向毕业季的跨模块直达</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">非学生侧可查询内容</div>
+    <table class="tbl">
+      <thead><tr><th>状态</th><th>典型使用人</th><th>可查询内容</th><th>对应现有模块 / 页面</th><th>建议搜索表达</th><th>备注</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>辅导员 / 班主任</td><td>待审请假、异常件识别、批量审批</td><td>待办事项 / teacher-approval-todo.html</td><td>待审请假、超三天请假、异常请假件</td><td>教师侧顶部占位词已直接覆盖</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>辅导员 / 学工老师</td><td>学生档案、成绩、家庭信息、画像查询</td><td>学生事务 / teacher-student-info.html</td><td>查某学生成绩、家庭情况、奖惩记录</td><td>是教师侧最核心的直达入口之一</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>辅导员 / 教学秘书协同</td><td>学风建设、出勤、课堂表现、班会安排</td><td>学风建设 / teacher-academic.html</td><td>本班出勤、缺课学生、班会通知</td><td>适合查情况后直接处理</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>辅导员 / 学院学工办</td><td>预警名单、重点学生、跟踪处置</td><td>学风预警 / teacher-academic-warning.html</td><td>预警名单、连续旷课学生、重点关注对象</td><td>顶部示例词已含预警名单</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>辅导员 / 资助老师</td><td>奖助材料审核、退回补件、盖章流转</td><td>材料审核 / teacher-material-review.html</td><td>奖学金材料审核、困难认定补件</td><td>和奖助贷勤审核闭环一致</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>辅导员 / 宿管老师</td><td>宿舍卫生、报修、调宿、在寝概览</td><td>宿舍管理 / 宿舍大屏 / teacher-dorm.html</td><td>寝室卫生不合格、报修统计、调宿申请</td><td>覆盖宿舍管理与宿舍大屏双入口</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>辅导员</td><td>学生谈话记录、回访计划、风险跟踪</td><td>学生谈话 / teacher-talk.html</td><td>某学生谈话记录、需要回访的学生</td><td>适合从查询直达谈话详情</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>学院学工负责人</td><td>学工队伍 KPI、案例库、培训安排</td><td>学工队伍 / teacher-team.html</td><td>辅导员 KPI、培训安排、典型案例</td><td>服务管理者与队伍建设</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>辅导员 / 学院办公室</td><td>通知发布、场地借用、活动组织</td><td>业务助手 / teacher-business.html</td><td>发班会通知、借教室、活动发布</td><td>与教师侧业务助手高度匹配</td></tr>
+        <tr><td><span class="badge badge-green">现有可挂载</span></td><td>辅导员 / 老师</td><td>写通知、写评语、整理口径的 AI 辅助</td><td>AI 教师助手 / ai-assistant-teacher.html</td><td>生成通知、写谈话纪要、写评语</td><td>更适合复杂生成式任务</td></tr>
+        <tr><td><span class="badge badge-orange">建议扩展</span></td><td>辅导员 / 学院学工办</td><td>节假日离校去向、未返校名单、失联风险</td><td>挂靠待办事项与学生事务模块</td><td>五一未返校名单、离校去向、失联预警</td><td>符合高校节假日值班与安全管理习惯</td></tr>
+        <tr><td><span class="badge badge-orange">建议扩展</span></td><td>辅导员 / 学院学工办</td><td>重点学生跟踪台账、家校沟通记录检索</td><td>挂靠学生谈话与学生事务模块</td><td>重点学生台账、家长沟通记录、跟踪情况</td><td>只在现有学生事务中纵深扩展</td></tr>
+        <tr><td><span class="badge badge-orange">建议扩展</span></td><td>资助老师 / 辅导员</td><td>欠费、困难认定异常、资助资格预警</td><td>挂靠材料审核与奖助贷勤模块</td><td>学费欠缴名单、资助异常、困难认定到期</td><td>适合做规则触发后的 AI 直达</td></tr>
+        <tr><td><span class="badge badge-orange">建议扩展</span></td><td>辅导员 / 学院管理员</td><td>心理危机、高风险事件、突发事件上报口径</td><td>挂靠学生谈话与业务助手模块</td><td>高风险学生、突发事件上报模板</td><td>建议仅做权限可控查询</td></tr>
+        <tr><td><span class="badge badge-orange">建议扩展</span></td><td>宿管老师 / 辅导员</td><td>夜不归宿、晚归异常、寝室矛盾处理建议</td><td>挂靠宿舍管理模块</td><td>夜不归宿名单、晚归异常、寝室冲突</td><td>延伸自现有宿舍管理与谈话能力</td></tr>
+        <tr><td><span class="badge badge-orange">建议扩展</span></td><td>学院管理员 / 学工负责人</td><td>就业去向未落实、毕业去向填报异常</td><td>挂靠学生事务与就业相关模块</td><td>未落实去向名单、毕业去向填报异常</td><td>适合毕业季的管理侧查询</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">落地原则</div>
+    <ul style="padding-left:20px;line-height:1.9">
+      <li>只扩展现有模块的查询深度，不凭空新增独立业务条线。</li>
+      <li>学生侧优先做"我的事项"，非学生侧优先做"我要处理的人和事"。</li>
+      <li>涉及政策、资格、审批口径的结果，统一保留"以学校正式文件为准"。</li>
+      <li>心理危机、失联、突发事件等高风险信息，应放在权限可控的非学生侧。</li>
+    </ul>
+  </div>
+</div>
+
+<div>
+  <div class="card" style="background:linear-gradient(135deg,#722ED1,#165DFF);color:#fff">
+    <div style="font-size:18px;font-weight:600">📌 使用定位</div>
+    <div class="mt8" style="opacity:.92;line-height:1.8">顶部 AI 直达面向"查什么、去哪办"，右下 AI 助手面向"怎么一步步办、怎么生成内容"。</div>
+  </div>
+  <div class="card">
+    <div class="card-title">🗂 文档导航</div>
+    <a class="list-row" href="prd-overview.html"><div class="lead" style="background:#165DFF">📘</div><div class="body"><div class="ttl">PRD 概览</div><div class="sub">产品定位与范围</div></div></a>
+    <a class="list-row" href="roles-permissions.html"><div class="lead" style="background:#36CFC9">👥</div><div class="body"><div class="ttl">角色与权限</div><div class="sub">Role · Scope · Action</div></div></a>
+    <a class="list-row" href="ability-matrix.html"><div class="lead" style="background:#FF7D00">🧩</div><div class="body"><div class="ttl">能力矩阵</div><div class="sub">AI 原子能力全景</div></div></a>
+    <a class="list-row" href="ai-direct-access-matrix.html"><div class="lead" style="background:#722ED1">🔎</div><div class="body"><div class="ttl">AI 直达角色梳理</div><div class="sub">当前页</div></div></a>
+    <a class="list-row" href="data-dictionary.html"><div class="lead" style="background:#0FC6C2">📊</div><div class="body"><div class="ttl">数据字典</div><div class="sub">实体 · 字段 · 血缘</div></div></a>
+  </div>
+  <div class="card">
+    <div class="card-title">依据来源</div>
+    <div class="list-row"><div class="lead" style="background:#165DFF">1</div><div class="body"><div class="ttl">顶部搜索占位词</div><div class="sub">学生侧为"全局搜索"，教师侧为"AI 直达"</div></div></div>
+    <div class="list-row"><div class="lead" style="background:#36CFC9">2</div><div class="body"><div class="ttl">AI 搜索弹层快捷入口</div><div class="sub">按 student / teacher 角色维护 QUICKS 入口池</div></div></div>
+    <div class="list-row"><div class="lead" style="background:#FF7D00">3</div><div class="body"><div class="ttl">帮助页能力定义</div><div class="sub">明确 AI 全局搜索 = 信息查询 + 功能直达</div></div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">状态说明</div>
+    <div class="fxw">
+      <span class="badge badge-green">现有可挂载</span>
+      <span class="sub">已有页面或入口，可直接纳入顶部 AI 直达</span>
+    </div>
+    <div class="fxw mt8">
+      <span class="badge badge-orange">建议扩展</span>
+      <span class="sub">符合高校业务习惯，建议在现有模块内继续扩展</span>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<a class="ai-ball" href="ai-assistant-teacher.html" title="学工 AI 助手">
+  <div class="fig"><div class="ai-word"><b>AI</b>学工助手</div></div>
+  <div class="tt">点击对话</div>
+</a>
+<div class="foot">
+  <a href="index.html">站点地图</a>·
+  <a href="prd-overview.html">PRD 概览</a>·
+  <a href="roles-permissions.html">权限矩阵</a>·
+  <a href="ability-matrix.html">能力矩阵</a>·
+  <a href="mindmap.html">功能脑图</a>·
+  <a href="menu-mindmap.html">菜单脑图</a>·
+  <a href="framework.html">系统框架图</a>·
+  <a href="help.html">帮助中心</a>·
+  <a href="feedback.html">意见反馈</a>
+  <div style="margin-top:8px">© 2026 中南大学 智慧学工 AI 助手 · 产品原型 V1.0 · 仅演示用途，不含真实数据</div>
+</div>
+<script src="ai-client.js"></script>
+<script src="ai-search-popup.js"></script>
+<script src="ai-float-ball.js"></script>
+<script src="ai-module-sdk.js"></script>
+</body>
+</html>

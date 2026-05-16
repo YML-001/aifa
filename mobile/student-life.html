@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>生活服务 · 中南大学智慧学工</title>
+<link rel="stylesheet" href="mobile-common.css">
+<style>
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.svc-item{background:#fff;border-radius:12px;padding:16px 8px;text-align:center;box-shadow:0 1px 6px rgba(0,0,0,.04);cursor:pointer;border:0;font-family:inherit;transition:all .15s}
+.svc-item:active{transform:scale(.95);background:#F7F8FA}
+.svc-item .si-icon{font-size:28px;margin-bottom:6px}
+.svc-item .si-label{font-size:12px;font-weight:600;color:#1D2129}
+.menu-preview{background:#fff;border-radius:14px;overflow:hidden;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,.04)}
+.menu-preview .mp-hd{padding:14px 14px 0;display:flex;align-items:center;justify-content:space-between}
+.menu-preview .mp-hd .label{font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px}
+.menu-preview .mp-hd .label .bar{width:3px;height:14px;border-radius:2px;background:linear-gradient(180deg,var(--blue),var(--cyan))}
+.menu-preview .mp-hd .more{font-size:12px;color:var(--gray)}
+.menu-row{display:flex;gap:10px;padding:14px}
+.menu-card{flex:1;background:var(--bg);border-radius:10px;padding:12px;min-width:0}
+.menu-card .mc-name{font-size:13px;font-weight:700;color:#1D2129;margin-bottom:4px}
+.menu-card .mc-loc{font-size:11px;color:var(--gray);margin-bottom:6px}
+.menu-card .mc-dish{font-size:12px;color:#4E5969;line-height:1.6}
+.menu-card .mc-tag{display:inline-block;padding:1px 6px;border-radius:6px;font-size:10px;margin-top:6px}
+.pkg-item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+.pkg-item:last-child{border-bottom:0}
+.pkg-item .pk-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.pkg-item .pk-body{flex:1;min-width:0}
+.pkg-item .pk-name{font-size:13px;font-weight:600;color:#1D2129}
+.pkg-item .pk-meta{font-size:11px;color:var(--gray);margin-top:2px}
+.pkg-item .pk-action{flex-shrink:0}
+.bus-card{background:linear-gradient(135deg,#E8F3FF,#F2F6FF);border:1px solid #D0E4FF;border-radius:14px;padding:14px;margin-bottom:12px}
+.bus-card .bc-hd{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;margin-bottom:10px}
+.bus-info{display:flex;align-items:center;gap:14px}
+.bus-info .bi-time{font-size:28px;font-weight:700;color:var(--blue)}
+.bus-info .bi-detail{flex:1}
+.bus-info .bi-route{font-size:13px;font-weight:600;color:#1D2129}
+.bus-info .bi-meta{font-size:11px;color:var(--gray);margin-top:2px}
+</style>
+</head>
+<body>
+
+<div class="m-nav">
+  <a class="back" href="../mobile-entry.html">‹</a>
+  <div class="title">生活服务</div>
+  <span class="action">⚙️</span>
+</div>
+
+<div class="m-body">
+
+  <!-- 快捷入口 -->
+  <div class="svc-grid">
+    <button class="svc-item" onclick="alert('食堂菜单（演示）')">
+      <div class="si-icon">🍽️</div>
+      <div class="si-label">食堂菜单</div>
+    </button>
+    <button class="svc-item" onclick="alert('快递查询（演示）')">
+      <div class="si-icon">📦</div>
+      <div class="si-label">快递查询</div>
+    </button>
+    <button class="svc-item" onclick="alert('场馆预约（演示）')">
+      <div class="si-icon">🏟️</div>
+      <div class="si-label">场馆预约</div>
+    </button>
+    <button class="svc-item" onclick="alert('校车时刻（演示）')">
+      <div class="si-icon">🚌</div>
+      <div class="si-label">校车时刻</div>
+    </button>
+    <button class="svc-item" onclick="alert('缴费中心（演示）')">
+      <div class="si-icon">💳</div>
+      <div class="si-label">缴费中心</div>
+    </button>
+    <button class="svc-item" onclick="alert('校园地图（演示）')">
+      <div class="si-icon">🗺️</div>
+      <div class="si-label">校园地图</div>
+    </button>
+  </div>
+
+  <!-- 今日菜单推荐 -->
+  <div class="menu-preview">
+    <div class="mp-hd">
+      <span class="label"><span class="bar"></span> 今日菜单推荐</span>
+      <span class="more">查看全部 ›</span>
+    </div>
+    <div class="menu-row">
+      <div class="menu-card">
+        <div class="mc-name">🍚 南一食堂</div>
+        <div class="mc-loc">二楼特色窗口</div>
+        <div class="mc-dish">
+          · 红烧排骨饭 ¥12<br>
+          · 酸菜鱼米饭 ¥14<br>
+          · 番茄鸡蛋面 ¥8
+        </div>
+        <span class="mc-tag" style="background:#E8FFEA;color:var(--green)">🔥 热销</span>
+      </div>
+      <div class="menu-card">
+        <div class="mc-name">🍜 南二食堂</div>
+        <div class="mc-loc">一楼美食广场</div>
+        <div class="mc-dish">
+          · 黄焖鸡米饭 ¥13<br>
+          · 麻辣香锅 ¥16<br>
+          · 鸡汤米粉 ¥9
+        </div>
+        <span class="mc-tag" style="background:#FFF3E8;color:var(--orange)">⭐ 推荐</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 快递提醒 -->
+  <div class="m-card">
+    <div class="m-card-ti"><span class="bar"></span> 📦 待取快递</div>
+
+    <div class="pkg-item">
+      <div class="pk-icon" style="background:#FFF3E8">📦</div>
+      <div class="pk-body">
+        <div class="pk-name">京东快递 · JD20260515****82</div>
+        <div class="pk-meta">南苑菜鸟驿站 · 货架 B-12 · 今天 10:20 到</div>
+      </div>
+      <div class="pk-action">
+        <button class="m-btn m-btn-primary m-btn-sm" onclick="alert('查看取件码（演示）')">取件码</button>
+      </div>
+    </div>
+
+    <div class="pkg-item">
+      <div class="pk-icon" style="background:#E8F3FF">📦</div>
+      <div class="pk-body">
+        <div class="pk-name">顺丰速运 · SF20260514****36</div>
+        <div class="pk-meta">升华快递柜 C 区 · 柜号 067 · 昨天 15:40 到</div>
+      </div>
+      <div class="pk-action">
+        <button class="m-btn m-btn-primary m-btn-sm" onclick="alert('查看取件码（演示）')">取件码</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 校车 -->
+  <div class="bus-card">
+    <div class="bc-hd">🚌 校车下一班</div>
+    <div class="bus-info">
+      <div class="bi-time">12:30</div>
+      <div class="bi-detail">
+        <div class="bi-route">南校区 → 新校区</div>
+        <div class="bi-meta">约 15 分钟后发车 · 剩余 12 座 · 校门口站台</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="m-btn m-btn-outline m-btn-sm" style="flex:1" onclick="alert('查看完整时刻表（演示）')">完整时刻表</button>
+      <button class="m-btn m-btn-primary m-btn-sm" style="flex:1" onclick="alert('预约乘车（演示）')">预约乘车</button>
+    </div>
+  </div>
+
+  <div class="m-foot">
+    © 2026 中南大学 智慧学工 AI 助手<br>产品原型 V1.0 · 仅演示用途
+  </div>
+</div>
+
+<div class="m-tabbar">
+  <a class="m-tab" href="../mobile-entry.html"><span class="tic">🏠</span>首页</a>
+  <a class="m-tab" href="student-schedule.html"><span class="tic">📅</span>课表</a>
+  <a class="m-tab" href="student-messages.html"><span class="tic">📨</span>消息</a>
+  <a class="m-tab" href="student-profile.html"><span class="tic">👤</span>我的</a>
+</div>
+
+<script src="../ai-client.js"></script>
+<script src="../ai-search-popup.js"></script>
+<script src="../ai-float-ball.js"></script>
+<script src="../ai-module-sdk.js"></script>
+</body>
+</html>

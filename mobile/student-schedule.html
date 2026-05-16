@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>日程课表 · 中南大学智慧学工</title>
+<link rel="stylesheet" href="mobile-common.css">
+<style>
+.today-bar{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;border-radius:14px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.today-bar .date{font-size:18px;font-weight:700}
+.today-bar .week{font-size:12px;opacity:.85;margin-top:2px}
+.today-bar .count{background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600}
+.sch-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);position:relative}
+.sch-item:last-child{border-bottom:0}
+.sch-time{width:52px;text-align:right;flex-shrink:0;padding-top:2px}
+.sch-time .h{font-size:14px;font-weight:700;color:#1D2129}
+.sch-time .e{font-size:10px;color:var(--gray)}
+.sch-line{width:3px;border-radius:2px;flex-shrink:0;min-height:48px}
+.sch-body{flex:1;min-width:0}
+.sch-body .name{font-size:14px;font-weight:600;color:#1D2129}
+.sch-body .info{font-size:11px;color:var(--gray);margin-top:4px;display:flex;flex-wrap:wrap;gap:6px}
+.sch-body .info span{display:inline-flex;align-items:center;gap:2px}
+.sch-badge{flex-shrink:0;align-self:center}
+.rest-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+.rest-item:last-child{border-bottom:0}
+.rest-item .ic{font-size:22px;flex-shrink:0}
+.rest-item .t{font-size:13px;color:var(--gray)}
+.tomorrow-card{background:linear-gradient(135deg,#F2F6FF,#E8F3FF);border:1px solid #D0E4FF;border-radius:14px;padding:14px 16px;margin-bottom:14px}
+.tomorrow-card .hd{font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.tm-row{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:13px}
+.tm-row .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.tm-row .time{color:var(--gray);font-size:11px;flex-shrink:0;width:70px}
+.tm-row .nm{flex:1;font-weight:500}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat-box{background:#fff;border-radius:12px;padding:14px 10px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.stat-box .v{font-size:20px;font-weight:700}
+.stat-box .l{font-size:10px;color:var(--gray);margin-top:2px}
+</style>
+</head>
+<body>
+
+<div class="m-nav">
+  <a class="back" href="../mobile-entry.html">‹</a>
+  <div class="title">日程课表</div>
+  <span class="action">📆</span>
+</div>
+
+<!-- Tab 切换 -->
+<div class="m-tabs">
+  <a class="on" href="javascript:;">本周</a>
+  <a href="javascript:;">下周</a>
+  <a href="javascript:;">全部</a>
+</div>
+
+<div class="m-body">
+
+  <!-- 今日概览 -->
+  <div class="today-bar">
+    <div>
+      <div class="date">5月16日</div>
+      <div class="week">星期六 · 第14教学周</div>
+    </div>
+    <div class="count">今日 4 节课</div>
+  </div>
+
+  <!-- 今日日程时间线 -->
+  <div class="m-card">
+    <div class="m-card-ti"><span class="bar"></span> 今日日程</div>
+
+    <div class="sch-item">
+      <div class="sch-time"><div class="h">8:00</div><div class="e">9:40</div></div>
+      <div class="sch-line" style="background:var(--blue)"></div>
+      <div class="sch-body">
+        <div class="name">高等数学 A（下）</div>
+        <div class="info">
+          <span>📍 教学楼 A-301</span>
+          <span>👤 王建国</span>
+        </div>
+      </div>
+      <div class="sch-badge"><span class="m-st ok">已上</span></div>
+    </div>
+
+    <div class="sch-item">
+      <div class="sch-time"><div class="h">10:00</div><div class="e">11:40</div></div>
+      <div class="sch-line" style="background:var(--cyan)"></div>
+      <div class="sch-body">
+        <div class="name">数据结构与算法</div>
+        <div class="info">
+          <span>📍 实验楼 B-205</span>
+          <span>👤 陈思远</span>
+        </div>
+      </div>
+      <div class="sch-badge"><span class="m-st ok">已上</span></div>
+    </div>
+
+    <div class="rest-item">
+      <div class="ic">🍱</div>
+      <div class="t">12:00 - 14:00 · 午休时间</div>
+    </div>
+
+    <div class="sch-item">
+      <div class="sch-time"><div class="h">14:00</div><div class="e">15:40</div></div>
+      <div class="sch-line" style="background:var(--orange)"></div>
+      <div class="sch-body">
+        <div class="name">大学英语（四）</div>
+        <div class="info">
+          <span>📍 外语楼 C-102</span>
+          <span>👤 张丽华</span>
+        </div>
+      </div>
+      <div class="sch-badge"><span class="m-st new">进行中</span></div>
+    </div>
+
+    <div class="sch-item">
+      <div class="sch-time"><div class="h">16:00</div><div class="e">17:40</div></div>
+      <div class="sch-line" style="background:var(--green)"></div>
+      <div class="sch-body">
+        <div class="name">体育课（羽毛球）</div>
+        <div class="info">
+          <span>📍 体育馆 2F</span>
+          <span>👤 刘教练</span>
+        </div>
+      </div>
+      <div class="sch-badge"><span class="m-badge m-badge-gray">未开始</span></div>
+    </div>
+  </div>
+
+  <!-- 明日预览 -->
+  <div class="tomorrow-card">
+    <div class="hd">📅 明日预览 · 星期日</div>
+    <div class="tm-row">
+      <div class="dot" style="background:var(--blue)"></div>
+      <div class="time">8:00-9:40</div>
+      <div class="nm">线性代数</div>
+    </div>
+    <div class="tm-row">
+      <div class="dot" style="background:var(--purple)"></div>
+      <div class="time">10:00-11:40</div>
+      <div class="nm">计算机组成原理</div>
+    </div>
+    <div class="tm-row">
+      <div class="dot" style="background:var(--orange)"></div>
+      <div class="time">14:00-15:40</div>
+      <div class="nm">概率论与数理统计</div>
+    </div>
+  </div>
+
+  <!-- 本周统计 -->
+  <div class="m-card">
+    <div class="m-card-ti"><span class="bar"></span> 本周统计</div>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="v" style="color:var(--blue)">22</div><div class="l">本周课程（节）</div></div>
+      <div class="stat-box"><div class="v" style="color:var(--green)">14</div><div class="l">已上（节）</div></div>
+      <div class="stat-box"><div class="v" style="color:var(--cyan)">100%</div><div class="l">出勤率</div></div>
+    </div>
+    <div class="m-progress" style="margin-top:12px"><span style="width:63.6%"></span></div>
+    <div class="muted" style="text-align:center;margin-top:6px">教学进度 14/22 节 · 63.6%</div>
+  </div>
+
+  <!-- 课程提醒 -->
+  <div class="m-card">
+    <div class="m-card-ti"><span class="bar"></span> 课程提醒</div>
+    <div class="m-list-item">
+      <div class="lead" style="background:var(--red)">📝</div>
+      <div class="body">
+        <div class="ttl">高数作业截止提醒</div>
+        <div class="sub">第 8 章习题 · 截止 5 月 18 日</div>
+      </div>
+      <span class="m-st warn">明天</span>
+    </div>
+    <div class="m-list-item">
+      <div class="lead" style="background:var(--purple)">🧪</div>
+      <div class="body">
+        <div class="ttl">数据结构实验报告</div>
+        <div class="sub">二叉树遍历 · 截止 5 月 20 日</div>
+      </div>
+      <span class="m-badge m-badge-blue">4天后</span>
+    </div>
+  </div>
+
+  <div class="m-foot">
+    © 2026 中南大学 智慧学工 AI 助手<br>产品原型 V1.0 · 仅演示用途
+  </div>
+</div>
+
+<!-- tabbar -->
+<div class="m-tabbar">
+  <a class="m-tab" href="../mobile-entry.html"><span class="tic">🏠</span>首页</a>
+  <a class="m-tab on" href="student-schedule.html"><span class="tic">📅</span>课表</a>
+  <a class="m-tab" href="student-messages.html"><span class="tic">📨</span>消息</a>
+  <a class="m-tab" href="student-profile.html"><span class="tic">👤</span>我的</a>
+</div>
+
+<script src="../ai-client.js"></script>
+<script src="../ai-search-popup.js"></script>
+<script src="../ai-float-ball.js"></script>
+<script src="../ai-module-sdk.js"></script>
+</body>
+</html>

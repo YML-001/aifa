@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>活动评奖评优 · 中南大学智慧学工</title>
+<link rel="stylesheet" href="mobile-common.css">
+<style>
+.act-item{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+.act-item:last-child{border-bottom:0}
+.act-ic{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;flex-shrink:0}
+.act-info{flex:1;min-width:0}
+.act-info .nm{font-size:14px;font-weight:600;color:#1D2129}
+.act-info .meta{font-size:11px;color:var(--gray);margin-top:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.act-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+.match-tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:8px;background:linear-gradient(135deg,#E8F3FF,#D6E8FF);color:var(--blue)}
+.match-tag.high{background:linear-gradient(135deg,#E8FFEA,#C6F6D0);color:var(--green)}
+.act-btn{padding:5px 12px;border-radius:8px;font-size:11px;font-weight:600;border:1.5px solid var(--blue);color:var(--blue);background:#fff;cursor:pointer}
+.act-btn:active{background:#E8F3FF}
+.score-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)}
+.score-row:last-child{border-bottom:0}
+.score-lb{font-size:13px;color:#4E5969;flex:1}
+.score-bar{flex:2;height:6px;background:#F2F3F5;border-radius:3px;overflow:hidden}
+.score-bar span{display:block;height:100%;border-radius:3px}
+.score-val{font-size:13px;font-weight:700;color:#1D2129;width:42px;text-align:right;flex-shrink:0}
+.total-score{font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;padding:6px 0}
+.total-label{text-align:center;font-size:12px;color:var(--gray);margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<div class="m-nav">
+  <a class="back" href="../mobile-entry.html">‹</a>
+  <div class="title">活动评奖评优</div>
+  <span class="action">🔔</span>
+</div>
+
+<div class="m-tabs">
+  <a class="on" onclick="switchTab(this,0)">推荐活动</a>
+  <a onclick="switchTab(this,1)">我的报名</a>
+  <a onclick="switchTab(this,2)">综测明细</a>
+</div>
+
+<div class="m-body">
+
+  <!-- Tab 0: 推荐活动 -->
+  <div class="tab-pane" id="tp0">
+    <div class="m-card">
+      <div class="m-card-ti"><span class="bar"></span>AI 推荐活动</div>
+      <div class="muted mb8">根据你的综测短板和兴趣画像智能推荐</div>
+
+      <div class="act-item">
+        <div class="act-ic" style="background:linear-gradient(135deg,#165DFF,#4080FF)">🖥</div>
+        <div class="act-info">
+          <div class="nm">ACM 程序设计竞赛</div>
+          <div class="meta"><span>📅 报名截止 6月15日</span><span>👥 已报 128人</span></div>
+          <div class="meta"><span class="chip blue">能力素质 +5分</span></div>
+        </div>
+        <div class="act-right">
+          <span class="match-tag high">匹配 95%</span>
+          <button class="act-btn">报名</button>
+        </div>
+      </div>
+
+      <div class="act-item">
+        <div class="act-ic" style="background:linear-gradient(135deg,var(--purple),#A855F7)">🎤</div>
+        <div class="act-info">
+          <div class="nm">校园歌手大赛</div>
+          <div class="meta"><span>📅 报名截止 6月20日</span><span>👥 已报 76人</span></div>
+          <div class="meta"><span class="chip blue">身心素质 +3分</span></div>
+        </div>
+        <div class="act-right">
+          <span class="match-tag">匹配 92%</span>
+          <button class="act-btn">报名</button>
+        </div>
+      </div>
+
+      <div class="act-item">
+        <div class="act-ic" style="background:linear-gradient(135deg,var(--orange),#FFA940)">📐</div>
+        <div class="act-info">
+          <div class="nm">全国大学生数学建模竞赛</div>
+          <div class="meta"><span>📅 报名截止 7月1日</span><span>👥 已报 214人</span></div>
+          <div class="meta"><span class="chip blue">学业 +4分</span><span class="chip green">能力 +4分</span></div>
+        </div>
+        <div class="act-right">
+          <span class="match-tag">匹配 88%</span>
+          <button class="act-btn">报名</button>
+        </div>
+      </div>
+
+      <div class="act-item">
+        <div class="act-ic" style="background:linear-gradient(135deg,var(--green),#52C41A)">🚀</div>
+        <div class="act-info">
+          <div class="nm">创新创业大赛</div>
+          <div class="meta"><span>📅 报名截止 6月30日</span><span>👥 已报 97人</span></div>
+          <div class="meta"><span class="chip blue">能力素质 +6分</span></div>
+        </div>
+        <div class="act-right">
+          <span class="match-tag">匹配 85%</span>
+          <button class="act-btn">报名</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-card">
+      <div class="m-card-ti"><span class="bar"></span>近期热门活动</div>
+      <div class="m-list-item">
+        <div class="lead" style="background:linear-gradient(135deg,#F5222D,#FF7875)">🏅</div>
+        <div class="body">
+          <div class="ttl">三好学生评选</div>
+          <div class="sub">截止 6月25日 · 学院推荐</div>
+        </div>
+        <span class="arr">›</span>
+      </div>
+      <div class="m-list-item">
+        <div class="lead" style="background:linear-gradient(135deg,#FAAD14,#FFC53D)">📝</div>
+        <div class="body">
+          <div class="ttl">优秀毕业生评选</div>
+          <div class="sub">截止 6月18日 · 校级评审</div>
+        </div>
+        <span class="arr">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 1: 我的报名 -->
+  <div class="tab-pane" id="tp1" style="display:none">
+    <div class="m-card">
+      <div class="m-card-ti"><span class="bar"></span>已报名活动</div>
+      <div class="m-list-item">
+        <div class="lead" style="background:linear-gradient(135deg,#165DFF,#4080FF)">🖥</div>
+        <div class="body">
+          <div class="ttl">ACM 程序设计竞赛</div>
+          <div class="sub">报名时间 2026-05-10</div>
+        </div>
+        <span class="m-st ok">已通过</span>
+      </div>
+      <div class="m-list-item">
+        <div class="lead" style="background:linear-gradient(135deg,var(--orange),#FFA940)">📐</div>
+        <div class="body">
+          <div class="ttl">数学建模竞赛</div>
+          <div class="sub">报名时间 2026-05-12</div>
+        </div>
+        <span class="m-st warn">审核中</span>
+      </div>
+    </div>
+    <div class="m-card">
+      <div class="m-card-ti"><span class="bar"></span>获奖记录</div>
+      <div class="m-list-item">
+        <div class="lead" style="background:linear-gradient(135deg,var(--green),#52C41A)">🏆</div>
+        <div class="body">
+          <div class="ttl">互联网+创新创业大赛 · 省级银奖</div>
+          <div class="sub">2025-11 · 能力素质 +6分</div>
+        </div>
+        <span class="m-badge-green" style="padding:2px 8px;border-radius:8px;font-size:11px;background:#E8FFEA;color:var(--green)">+6分</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 2: 综测明细 -->
+  <div class="tab-pane" id="tp2" style="display:none">
+    <div class="m-card tac">
+      <div class="m-card-ti" style="justify-content:center"><span class="bar"></span>综合素质测评总分</div>
+      <div class="total-score">86.5</div>
+      <div class="total-label">2025—2026 学年第二学期</div>
+
+      <div class="score-row">
+        <span class="score-lb">学业成绩</span>
+        <div class="score-bar"><span style="width:70%;background:linear-gradient(90deg,var(--blue),var(--blue2))"></span></div>
+        <span class="score-val">70%</span>
+      </div>
+      <div class="score-row">
+        <span class="score-lb">思想政治</span>
+        <div class="score-bar"><span style="width:15%;background:linear-gradient(90deg,var(--green),#52C41A)"></span></div>
+        <span class="score-val">15%</span>
+      </div>
+      <div class="score-row">
+        <span class="score-lb">能力素质</span>
+        <div class="score-bar"><span style="width:10%;background:linear-gradient(90deg,var(--orange),#FFA940)"></span></div>
+        <span class="score-val">10%</span>
+      </div>
+      <div class="score-row">
+        <span class="score-lb">身心素质</span>
+        <div class="score-bar"><span style="width:5%;background:linear-gradient(90deg,var(--purple),#A855F7)"></span></div>
+        <span class="score-val">5%</span>
+      </div>
+    </div>
+
+    <div class="m-card">
+      <div class="m-card-ti"><span class="bar"></span>各项得分明细</div>
+      <div class="m-list-item">
+        <div class="lead" style="background:linear-gradient(135deg,var(--blue),var(--blue2))">📚</div>
+        <div class="body">
+          <div class="ttl">学业成绩</div>
+          <div class="sub">加权平均分 88.6 · 排名 15/186</div>
+        </div>
+        <span style="font-size:16px;font-weight:700;color:var(--blue)">60.4</span>
+      </div>
+      <div class="m-list-item">
+        <div class="lead" style="background:linear-gradient(135deg,var(--green),#52C41A)">🎖</div>
+        <div class="body">
+          <div class="ttl">思想政治</div>
+          <div class="sub">党团活动 · 志愿服务 · 社会实践</div>
+        </div>
+        <span style="font-size:16px;font-weight:700;color:var(--green)">13.2</span>
+      </div>
+      <div class="m-list-item">
+        <div class="lead" style="background:linear-gradient(135deg,var(--orange),#FFA940)">💡</div>
+        <div class="body">
+          <div class="ttl">能力素质</div>
+          <div class="sub">竞赛获奖 · 科研成果 · 技能证书</div>
+        </div>
+        <span style="font-size:16px;font-weight:700;color:var(--orange)">8.5</span>
+      </div>
+      <div class="m-list-item">
+        <div class="lead" style="background:linear-gradient(135deg,var(--purple),#A855F7)">🏃</div>
+        <div class="body">
+          <div class="ttl">身心素质</div>
+          <div class="sub">体育达标 · 心理健康 · 文体活动</div>
+        </div>
+        <span style="font-size:16px;font-weight:700;color:var(--purple)">4.4</span>
+      </div>
+    </div>
+
+    <div class="m-card">
+      <div class="m-card-ti"><span class="bar"></span>AI 综测提升建议</div>
+      <div class="muted mb8">基于你的综测短板，AI 推荐以下提升路径：</div>
+      <div class="m-list-item">
+        <div class="lead" style="background:linear-gradient(135deg,var(--cyan),var(--blue))">🤖</div>
+        <div class="body">
+          <div class="ttl">参加学科竞赛提升能力素质分</div>
+          <div class="sub">推荐 ACM竞赛、数学建模 · 预计 +4~8分</div>
+        </div>
+        <span class="arr">›</span>
+      </div>
+      <div class="m-list-item">
+        <div class="lead" style="background:linear-gradient(135deg,var(--cyan),var(--blue))">🤖</div>
+        <div class="body">
+          <div class="ttl">增加志愿服务时长</div>
+          <div class="sub">本学期仅 12h · 目标 30h · 预计 +2分</div>
+        </div>
+        <span class="arr">›</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="m-tabbar">
+  <a class="m-tab" href="../mobile-entry.html"><span class="tic">🏠</span>首页</a>
+  <a class="m-tab" href="student-schedule.html"><span class="tic">📅</span>课表</a>
+  <a class="m-tab" href="student-messages.html"><span class="tic">📨</span>消息</a>
+  <a class="m-tab" href="student-profile.html"><span class="tic">👤</span>我的</a>
+</div>
+
+<script src="../ai-client.js"></script>
+<script src="../ai-search-popup.js"></script>
+<script src="../ai-float-ball.js"></script>
+<script src="../ai-module-sdk.js"></script>
+<script src="../ai-page-enhance.js"></script>
+<script>
+function switchTab(el, idx) {
+  document.querySelectorAll('.m-tabs a').forEach(a => a.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.tab-pane').forEach((p, i) => p.style.display = i === idx ? '' : 'none');
+}
+</script>
+</body>
+</html>

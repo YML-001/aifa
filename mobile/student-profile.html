@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>个人中心 · 中南大学智慧学工</title>
+<link rel="stylesheet" href="mobile-common.css">
+<style>
+.profile-hd{background:linear-gradient(135deg,#0E42B5,var(--blue),var(--cyan));padding:24px 16px 28px;text-align:center;color:#fff;position:relative;overflow:hidden}
+.profile-hd::after{content:"";position:absolute;bottom:-30px;right:-30px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.07)}
+.profile-ava{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#B3E5FC,#4DB6AC);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#fff;margin:0 auto 10px;box-shadow:0 4px 16px rgba(0,0,0,.15);border:3px solid rgba(255,255,255,.3)}
+.profile-name{font-size:18px;font-weight:700;letter-spacing:.5px}
+.profile-desc{font-size:12px;opacity:.85;margin-top:4px}
+.profile-id{font-size:11px;opacity:.6;margin-top:4px;font-family:monospace;letter-spacing:1px}
+.quick-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:-18px 16px 0;position:relative;z-index:10}
+.qs-item{background:#fff;border-radius:12px;padding:14px 8px;text-align:center;box-shadow:0 2px 10px rgba(22,93,255,.1)}
+.qs-item .val{font-size:20px;font-weight:700;color:var(--blue)}
+.qs-item .lb{font-size:11px;color:var(--gray);margin-top:2px}
+.menu-group{background:#fff;border-radius:14px;margin:16px;box-shadow:0 1px 6px rgba(0,0,0,.04);overflow:hidden}
+.menu-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);text-decoration:none;color:#1D2129}
+.menu-item:last-child{border-bottom:0}
+.menu-item:active{background:#F7F8FA}
+.menu-item .mic{width:32px;height:32px;border-radius:10px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.menu-item .mlb{flex:1;font-size:14px;font-weight:500}
+.menu-item .arr{color:#C9CDD4;font-size:14px;flex-shrink:0}
+.menu-item.danger .mlb{color:var(--red)}
+.logout-btn{display:block;margin:0 16px 24px;padding:14px;border-radius:12px;border:1.5px solid var(--red);background:#fff;color:var(--red);font-size:14px;font-weight:600;text-align:center;cursor:pointer;font-family:inherit}
+.logout-btn:active{background:#FFF1F0}
+</style>
+</head>
+<body>
+
+<div class="m-nav">
+  <a class="back" href="../mobile-entry.html">‹</a>
+  <div class="title">个人中心</div>
+  <span class="action">⚙️</span>
+</div>
+
+<div class="profile-hd">
+  <div class="profile-ava">梧</div>
+  <div class="profile-name">梧桐同学</div>
+  <div class="profile-desc">2022级 · 计算机学院 · 软件工程3班</div>
+  <div class="profile-id">学号 8208220312</div>
+</div>
+
+<div class="quick-stats">
+  <div class="qs-item">
+    <div class="val">3.62</div>
+    <div class="lb">GPA</div>
+  </div>
+  <div class="qs-item">
+    <div class="val" style="color:var(--green)">48</div>
+    <div class="lb">已修学分</div>
+  </div>
+  <div class="qs-item">
+    <div class="val" style="color:var(--orange)">4</div>
+    <div class="lb">获奖记录</div>
+  </div>
+</div>
+
+<div class="menu-group">
+  <a class="menu-item" href="#">
+    <span class="mic">📋</span>
+    <span class="mlb">个人信息</span>
+    <span class="arr">›</span>
+  </a>
+  <a class="menu-item" href="#">
+    <span class="mic">🔒</span>
+    <span class="mlb">账号安全</span>
+    <span class="arr">›</span>
+  </a>
+  <a class="menu-item" href="student-grades.html">
+    <span class="mic">📊</span>
+    <span class="mlb">我的成绩</span>
+    <span class="arr">›</span>
+  </a>
+  <a class="menu-item" href="student-leave.html">
+    <span class="mic">🗓️</span>
+    <span class="mlb">请假记录</span>
+    <span class="arr">›</span>
+  </a>
+  <a class="menu-item" href="student-funding.html">
+    <span class="mic">💰</span>
+    <span class="mlb">奖助记录</span>
+    <span class="arr">›</span>
+  </a>
+</div>
+
+<div class="menu-group">
+  <a class="menu-item" href="#">
+    <span class="mic">⚙️</span>
+    <span class="mlb">设置</span>
+    <span class="arr">›</span>
+  </a>
+  <a class="menu-item" href="#">
+    <span class="mic">❓</span>
+    <span class="mlb">帮助与反馈</span>
+    <span class="arr">›</span>
+  </a>
+</div>
+
+<button class="logout-btn" onclick="alert('确认退出登录？')">🚪 退出登录</button>
+
+<div class="m-tabbar">
+  <a class="m-tab" href="../mobile-entry.html"><span class="tic">🏠</span>首页</a>
+  <a class="m-tab" href="student-schedule.html"><span class="tic">📅</span>课表</a>
+  <a class="m-tab" href="student-messages.html"><span class="tic">📨</span>消息</a>
+  <a class="m-tab on" href="student-profile.html"><span class="tic">👤</span>我的</a>
+</div>
+
+<script src="../ai-client.js"></script>
+<script src="../ai-search-popup.js"></script>
+<script src="../ai-float-ball.js"></script>
+<script src="../ai-module-sdk.js"></script>
+</body>
+</html>

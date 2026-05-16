@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>中南心声 · 中南大学智慧学工</title>
+<link rel="stylesheet" href="mobile-common.css">
+<style>
+.post-card{background:#fff;padding:14px;border-bottom:8px solid var(--bg)}
+.post-card:active{background:#FAFCFF}
+.post-user{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.post-ava{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.post-user .info{flex:1;min-width:0}
+.post-user .name{font-size:13px;font-weight:600;color:#1D2129}
+.post-user .time{font-size:11px;color:var(--gray)}
+.post-title{font-size:15px;font-weight:700;color:#1D2129;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.post-preview{font-size:13px;color:#4E5969;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:8px}
+.post-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.post-tag{padding:2px 10px;border-radius:999px;font-size:11px;font-weight:500}
+.post-tag.suggest{background:#E8F3FF;color:var(--blue)}
+.post-tag.praise{background:#E8FFEA;color:var(--green)}
+.post-tag.complaint{background:#FEECEC;color:var(--red)}
+.post-tag.topic{background:#F5E8FF;color:var(--purple)}
+.post-footer{display:flex;align-items:center;gap:16px;font-size:12px;color:var(--gray)}
+.post-footer span{display:flex;align-items:center;gap:4px}
+.fab-post{position:fixed;bottom:calc(70px + var(--safe-b));right:16px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;border:0;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 16px rgba(22,93,255,.35);cursor:pointer;z-index:80}
+.fab-post:active{transform:scale(.92)}
+</style>
+</head>
+<body>
+
+<div class="m-nav">
+  <a class="back" href="../mobile-entry.html">‹</a>
+  <div class="title">中南心声</div>
+  <span class="action">🔔</span>
+</div>
+
+<div class="m-search">
+  <div class="bar">
+    <input type="text" placeholder="搜索帖子、话题…">
+  </div>
+</div>
+
+<div class="m-tabs">
+  <a class="on" href="#">最新</a>
+  <a href="#">热门</a>
+  <a href="#">我的</a>
+</div>
+
+<div>
+  <!-- 帖子 1 -->
+  <div class="post-card">
+    <div class="post-user">
+      <div class="post-ava" style="background:linear-gradient(135deg,var(--blue),var(--blue2))">林</div>
+      <div class="info">
+        <div class="name">林同学</div>
+        <div class="time">10 分钟前</div>
+      </div>
+    </div>
+    <div class="post-title">建议图书馆延长周末开放时间</div>
+    <div class="post-preview">希望学校考虑在周末将图书馆闭馆时间从 21:00 延长至 22:30，期末备考期间座位十分紧张，很多同学找不到自习位置……</div>
+    <div class="post-tags">
+      <span class="post-tag suggest">建议</span>
+      <span class="post-tag topic">图书馆</span>
+    </div>
+    <div class="post-footer">
+      <span>💬 24</span>
+      <span>❤️ 186</span>
+      <span>👁 1.2k</span>
+    </div>
+  </div>
+
+  <!-- 帖子 2 -->
+  <div class="post-card">
+    <div class="post-user">
+      <div class="post-ava" style="background:linear-gradient(135deg,var(--green),#36D67C)">张</div>
+      <div class="info">
+        <div class="name">张同学</div>
+        <div class="time">1 小时前</div>
+      </div>
+    </div>
+    <div class="post-title">表扬南校食堂新菜品，真的很好吃！</div>
+    <div class="post-preview">南校区二食堂最近新推出的湘西腊肉炒饭和酸汤肥牛简直绝了，量大实惠，味道地道，给食堂阿姨点赞！</div>
+    <div class="post-tags">
+      <span class="post-tag praise">表扬</span>
+      <span class="post-tag topic">食堂</span>
+    </div>
+    <div class="post-footer">
+      <span>💬 12</span>
+      <span>❤️ 34</span>
+      <span>👁 156</span>
+    </div>
+  </div>
+
+  <!-- 帖子 3 -->
+  <div class="post-card">
+    <div class="post-user">
+      <div class="post-ava" style="background:linear-gradient(135deg,var(--orange),#FFA940)">王</div>
+      <div class="info">
+        <div class="name">王同学</div>
+        <div class="time">3 小时前</div>
+      </div>
+    </div>
+    <div class="post-title">A 栋宿舍热水供应时间太短</div>
+    <div class="post-preview">A 栋宿舍热水只在 17:00-23:00 供应，很多有晚课的同学回来洗澡时热水已经不够了，建议延长到 24:00 或增加储水容量。</div>
+    <div class="post-tags">
+      <span class="post-tag complaint">投诉</span>
+      <span class="post-tag topic">宿舍</span>
+    </div>
+    <div class="post-footer">
+      <span>💬 31</span>
+      <span>❤️ 92</span>
+      <span>👁 478</span>
+    </div>
+  </div>
+
+  <!-- 帖子 4 -->
+  <div class="post-card">
+    <div class="post-user">
+      <div class="post-ava" style="background:linear-gradient(135deg,var(--purple),#9254DE)">陈</div>
+      <div class="info">
+        <div class="name">陈同学</div>
+        <div class="time">5 小时前</div>
+      </div>
+    </div>
+    <div class="post-title">建议增加校园巴士发车频率</div>
+    <div class="post-preview">早上 7:30-8:00 高峰期校园巴士排队人很多，经常两三趟都挤不上去，建议高峰时段缩短发车间隔到 5 分钟一趟。</div>
+    <div class="post-tags">
+      <span class="post-tag suggest">建议</span>
+      <span class="post-tag topic">交通</span>
+    </div>
+    <div class="post-footer">
+      <span>💬 18</span>
+      <span>❤️ 67</span>
+      <span>👁 320</span>
+    </div>
+  </div>
+</div>
+
+<!-- 发帖按钮 -->
+<button class="fab-post" onclick="alert('发布新帖子')">✏️</button>
+
+<div class="m-tabbar">
+  <a class="m-tab" href="../mobile-entry.html"><span class="tic">🏠</span>首页</a>
+  <a class="m-tab" href="student-schedule.html"><span class="tic">📅</span>课表</a>
+  <a class="m-tab" href="student-messages.html"><span class="tic">📨</span>消息</a>
+  <a class="m-tab" href="student-profile.html"><span class="tic">👤</span>我的</a>
+</div>
+
+<script src="../ai-client.js"></script>
+<script src="../ai-search-popup.js"></script>
+<script src="../ai-float-ball.js"></script>
+<script src="../ai-module-sdk.js"></script>
+<script src="../ai-page-enhance.js"></script>
+</body>
+</html>

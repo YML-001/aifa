@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>AI 全局搜索 · 中南大学智慧学工</title>
+<link rel="stylesheet" href="mobile-common.css">
+<style>
+.search-hero{background:linear-gradient(135deg,#165DFF,#36CFC9);padding:20px 16px 24px;text-align:center;color:#fff}
+.search-hero .logo{font-size:28px;font-weight:800;letter-spacing:4px;margin-bottom:4px;text-shadow:0 2px 8px rgba(0,0,0,.1)}
+.search-hero .sub{font-size:12px;opacity:.85}
+.search-bar{margin:-18px 14px 0;position:relative;z-index:10}
+.search-bar .bar{display:flex;align-items:center;gap:8px;background:#fff;border-radius:14px;padding:6px 6px 6px 14px;box-shadow:0 6px 24px rgba(22,93,255,.15)}
+.search-bar .ic{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.search-bar input{flex:1;border:0;outline:0;font-size:14px;color:#1D2129;background:transparent;height:40px;min-width:0}
+.search-bar input::placeholder{color:#C9CDD4}
+.search-bar .go{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border:0;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.hot-tags{padding:14px;display:flex;flex-wrap:wrap;gap:8px}
+.hot-tag{padding:6px 12px;border-radius:999px;background:#F2F6FF;color:var(--blue);font-size:12px;border:1px solid #D0E4FF;cursor:pointer}
+.hot-tag:active{background:var(--blue);color:#fff}
+.result-area{padding:0 14px 14px}
+.r-card{background:#fff;border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 1px 6px rgba(0,0,0,.04)}
+.r-card-ti{font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;color:#1D2129}
+.r-card-ti .bar{width:3px;height:14px;border-radius:2px;background:linear-gradient(135deg,var(--blue),var(--cyan))}
+.r-card-ti .chip{margin-left:auto}
+.intent-chip{padding:3px 10px;border-radius:10px;font-size:11px;font-weight:600;white-space:nowrap}
+.answer-box .ais-info{line-height:1.8;border-left:3px solid var(--blue);padding-left:10px;margin:4px 0}
+.answer-box .ais-info b{color:#1D2129}
+.r-foot{font-size:10px;color:#C9CDD4;text-align:center;padding:6px 0 0;display:flex;align-items:center;justify-content:center;gap:4px}
+.r-foot .d{width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0}
+.answer-box{font-size:13px;line-height:1.8;color:#4E5969;min-height:60px}
+.answer-box b{color:#1D2129}
+.answer-box .discl{font-size:11px;color:#C9CDD4;margin-top:8px;padding-top:8px;border-top:1px dashed #F2F3F5}
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.action-btn{display:flex;align-items:center;gap:8px;padding:12px;background:#F5FAFF;border:1px solid #E8F3FF;border-radius:12px;text-decoration:none;color:#1D2129}
+.action-btn:active{background:#E8F3FF;border-color:var(--blue)}
+.action-btn .ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0}
+.action-btn .tx{font-size:12px;font-weight:600}
+.action-btn .sd{font-size:10px;color:var(--gray);margin-top:1px}
+.followup-chips{display:flex;flex-wrap:wrap;gap:6px}
+.followup-chip{padding:6px 12px;border-radius:999px;font-size:12px;background:#E8F3FF;color:var(--blue);border:1px solid #D0E4FF;cursor:pointer}
+.followup-chip:active{background:var(--blue);color:#fff}
+.history-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.history-row:last-child{border-bottom:0}
+.history-row .q{flex:1;font-size:13px;color:#4E5969;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.history-row .t{font-size:11px;color:var(--gray);flex-shrink:0}
+.mode-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:8px;font-size:10px;font-weight:600}
+.mode-pill.demo{background:#FFF3E8;color:var(--orange)}
+.mode-pill.live{background:#E8FFEA;color:var(--green)}
+</style>
+</head>
+<body>
+
+<div class="m-nav">
+  <a class="back" href="../mobile-entry.html">‹</a>
+  <div class="title">AI 全局搜索</div>
+  <a class="action" href="ai-assistant-chat.html">💬</a>
+</div>
+
+<div class="search-hero">
+  <div class="logo">Ai</div>
+  <div class="sub">输入问题 · AI 识别意图 · 直达结果</div>
+</div>
+
+<div class="search-bar">
+  <form class="bar" data-ai-search onsubmit="return false">
+    <span class="ic">Ai</span>
+    <input id="q-input" type="text" name="q" placeholder="请假 / 综测 / 奖学金 / 宿舍报修" autocomplete="off">
+    <button type="button" class="go" id="q-btn">🔍</button>
+  </form>
+</div>
+
+<div class="hot-tags" id="hot-tags">
+  <span style="font-size:11px;color:var(--gray);width:100%;margin-bottom:-2px">🔥 热门搜索</span>
+</div>
+
+<div class="result-area" id="result-area">
+  <div class="r-card">
+    <div class="r-card-ti"><span class="bar"></span>📋 查询结果 <span id="intent-pill" class="intent-chip" style="display:none"></span> <span id="mode-badge" class="mode-pill demo">● Demo</span></div>
+    <div class="answer-box" id="answer-box">请在上方输入你的问题，或点击热门搜索关键词开始。</div>
+  </div>
+
+  <div class="r-card" id="action-area" style="display:none">
+    <div class="r-card-ti"><span class="bar"></span>🚀 快捷入口（可直接办理）</div>
+    <div class="action-grid" id="action-grid"></div>
+  </div>
+
+  <div class="r-card" id="followup-area" style="display:none">
+    <div class="r-card-ti"><span class="bar"></span>🔖 相关关键词（点击继续查询）</div>
+    <div class="followup-chips" id="followup-chips"></div>
+  </div>
+
+  <div class="r-foot" id="result-foot" style="display:none"><span class="d"></span>本结果由 AI 结合知识库 + 角色权限生成 · 来源：学工中心 · 教务处</div>
+
+  <div class="r-card" id="history-area" style="display:none">
+    <div class="r-card-ti"><span class="bar"></span>📋 最近搜索</div>
+    <div id="history-list"></div>
+  </div>
+</div>
+
+<div class="m-foot">
+  © 2026 中南大学 智慧学工 AI 助手<br>产品原型 V1.0 · 仅演示用途
+</div>
+
+<div class="m-tabbar">
+  <a class="m-tab" href="../mobile-entry.html"><span class="tic">🏠</span>首页</a>
+  <a class="m-tab" href="student-schedule.html"><span class="tic">📅</span>课表</a>
+  <a class="m-tab" href="student-messages.html"><span class="tic">📨</span>消息</a>
+  <a class="m-tab" href="student-profile.html"><span class="tic">👤</span>我的</a>
+</div>
+
+<script src="../ai-client.js"></script>
+<script src="../ai-search-popup.js"></script>
+<script src="../ai-float-ball.js"></script>
+<script src="../ai-module-sdk.js"></script>
+<script>
+(function(){
+  function $(id){ return document.getElementById(id); }
+  function esc(s){ return String(s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  /* --------------- 快捷入口（学生角色，移动端） --------------- */
+  var QUICKS = {
+    grades:     {ic:'📊', bg:'#165DFF', ti:'我的成绩',   sb:'历年课程 / GPA',    href:'student-grades.html'},
+    academic:   {ic:'📚', bg:'#36CFC9', ti:'学业成长',   sb:'课程 · 目标 · 规划', href:'student-academic.html'},
+    scholarship:{ic:'🏆', bg:'#FF7D00', ti:'奖学金',     sb:'申请 / 规则查询',    href:'student-scholarship.html'},
+    funding:    {ic:'💰', bg:'#722ED1', ti:'奖助贷勤',   sb:'一站式办理入口',     href:'student-funding.html'},
+    leave:      {ic:'🗓️', bg:'#165DFF', ti:'在线请假',   sb:'病假 / 事假 / 公假', href:'student-leave.html'},
+    leaveRec:   {ic:'📄', bg:'#86909C', ti:'请假记录',   sb:'查看审批进度',       href:'student-leave.html'},
+    dormRepair: {ic:'🔧', bg:'#00B42A', ti:'宿舍报修',   sb:'空调/水电/家具',     href:'student-dorm-repair.html'},
+    activity:   {ic:'🎭', bg:'#722ED1', ti:'活动评奖',   sb:'报名 · 综测加分',    href:'student-activity-match.html'},
+    secondCls:  {ic:'🎓', bg:'#0FC6C2', ti:'第二课堂',   sb:'学分 / 证书',        href:'student-second-classroom.html'},
+    employment: {ic:'💼', bg:'#165DFF', ti:'就业中心',   sb:'岗位 / 简历 / 签约', href:'student-employment.html'},
+    card:       {ic:'💳', bg:'#FF7D00', ti:'校园卡',     sb:'挂失 / 充值',        href:'student-card.html'},
+    lost:       {ic:'🔎', bg:'#F53F3F', ti:'失物招领',   sb:'发布 / 查找',        href:'student-lost.html'},
+    profile:    {ic:'👤', bg:'#86909C', ti:'个人档案',   sb:'基础信息维护',       href:'student-profile.html'},
+    aiAssist:   {ic:'🤖', bg:'#722ED1', ti:'AI 助手',    sb:'对话式深入咨询',     href:'ai-assistant-chat.html'}
+  };
+
+  /* --------------- 知识库：意图 → 结果 --------------- */
+  var KB = [
+    { kw:/成绩|绩点|gpa|排名|挂科|分数/i, intent:'成绩查询',
+      related:['GPA 加权计算','学分排名','补考重修','奖学金成绩要求'],
+      result:'<div class="ais-info"><b>你的成绩概览</b><br>• 累计 GPA：<b>3.62</b>（专业排名 8/126，前 6.3%）<br>• 本学期 GPA：3.78（上升 ↑0.16）<br>• 已修 126/170 学分，完成 74%<br>• ⚠️ 高等数学 B(下) 期中 62 分，有挂科风险<br><span style="color:#86909C">数据来源：教务系统 · 实时同步</span></div>',
+      quicks:['grades','academic','scholarship','secondCls'] },
+    { kw:/请假|事假|病假|公假|销假/i, intent:'请假办理',
+      related:['病假流程','请假销假','超7天长假','辅导员审批进度'],
+      result:'<div class="ais-info"><b>请假流程（学生端）</b><br>1. 「在线请假」填写起止时间与原因，上传证明材料（病假需病历单）<br>2. 系统自动推送至<b>班主任 → 辅导员</b>审批，超 3 天需加签院领导<br>3. 审批通过后系统自动同步至考勤与课程表，假期结束记得<b>销假</b><br><span style="color:#86909C">（以《中南大学学生请假管理办法》2024 修订版为准）</span></div>',
+      quicks:['leave','leaveRec','profile','aiAssist'] },
+    { kw:/奖学金|国奖|国励|学业奖|优秀学生/i, intent:'奖学金查询',
+      related:['国家奖学金申请条件','助学金评定','奖学金公示','综测加分'],
+      result:'<div class="ais-info"><b>你的奖学金匹配结果（AI 预判）</b><br>• 国家奖学金：GPA 3.62 ✅ 达标（需 ≥3.5）· 综测排名 8/126 ✅<br>• 国家励志奖学金：需<b>家庭经济困难认定</b>（未提交，建议补传）<br>• 校级一等奖学金：匹配度 <b>92%</b>，可直接申请<br><span style="color:#86909C">（最终以学院公示结果为准）</span></div>',
+      quicks:['scholarship','funding','activity','grades'] },
+    { kw:/助学金|贷款|困难|资助|奖助贷/i, intent:'资助查询',
+      related:['国家助学金','助学贷款','勤工助学','临时困难补助'],
+      result:'<div class="ais-info"><b>资助政策速查</b><br>• 国家助学金：一档 4400元/年（匹配度 90%）<br>• 助学贷款：最高 16000元/年，在校免息<br>• 勤工助学：图书馆助管岗 800元/月<br>• 临时困难补助：最高 3000元，随时可申请</div>',
+      quicks:['funding','scholarship','profile','aiAssist'] },
+    { kw:/宿舍|报修|空调|热水|寝室/i, intent:'宿舍 / 报修',
+      related:['空调报修','宿舍调换','卫生评分','寝室成员'],
+      result:'<div class="ais-info"><b>宿舍报修步骤</b><br>1. 「宿舍报修」→ 选择故障类型（空调 / 水电 / 家具 / 其他）<br>2. 上传<b>故障照片</b>，选择维修上门时段<br>3. 宿管 30 分钟内响应，修复后在「我的工单」里确认并评价</div>',
+      quicks:['dormRepair','card','lost','aiAssist'] },
+    { kw:/就业|签约|实习|简历|三方|面试/i, intent:'就业服务',
+      related:['三方协议','就业推荐信','简历优化','生源地调整'],
+      result:'<div class="ais-info"><b>就业办理直达</b><br>• 三方协议：下载 → 企业盖章 → 系统上传 → 辅导员审核<br>• 生源地：可在「个人档案」中修改，<b>一年仅限 1 次</b><br>• 推荐信：在「就业中心」→ 推荐信模板 → 一键生成 PDF</div>',
+      quicks:['employment','profile','aiAssist','academic'] },
+    { kw:/综测|综合测评|评奖|活动|比赛|竞赛/i, intent:'综测 / 活动',
+      related:['综测加分细则','活动报名','竞赛学分','第二课堂'],
+      result:'<div class="ais-info"><b>综测 / 活动办理要点</b><br>• 综测计分 = 学业 70% + 思政 15% + 能力 10% + 身心 5%<br>• 活动报名：在「活动评奖评优」查看匹配度 ≥85 的推荐活动<br>• 第二课堂：每学期需修满 2 学分，不足将影响毕业</div>',
+      quicks:['activity','secondCls','scholarship','grades'] },
+    { kw:/第二课堂|二课|学分|证书/i, intent:'学分查询',
+      related:['第二课堂学分','志愿学时','创新实践','学分认定'],
+      result:'<div class="ais-info"><b>第二课堂学分进度</b><br>• 已获：6.5 / 10 学分（65%）<br>• 缺：志愿服务 1.0 + 学术科技 0.5 + 实践 0.5<br>• AI 推荐：本周六"周末志愿行"（+0.5 志愿学分）</div>',
+      quicks:['secondCls','activity','academic','aiAssist'] },
+    { kw:/校园卡|饭卡|一卡通|充值|挂失/i, intent:'校园卡服务',
+      related:['校园卡充值','挂失补办','消费明细','自动充值'],
+      result:'<div class="ais-info"><b>校园卡服务</b><br>• 余额：￥126.50<br>• 在线充值：支持微信/支付宝，实时到账<br>• 挂失补办：线上申请 → 一站式大厅取卡（工本费 20 元）</div>',
+      quicks:['card','profile','lost','aiAssist'] },
+    { kw:/失物|丢|捡|招领/i, intent:'失物招领',
+      related:['寻物启事','拾物登记','AI图像匹配','联系拾到者'],
+      result:'<div class="ais-info"><b>失物招领</b><br>• 发布寻物/招领信息，AI 会自动匹配图像特征<br>• 最近 7 天新增招领 23 件，认领率 68%<br>• 高频丢失地点：图书馆 > 食堂 > 教学楼</div>',
+      quicks:['lost','card','profile','aiAssist'] },
+    { kw:/课表|课程|上课|选课/i, intent:'课表查询',
+      related:['今日课表','选课时间','教室查询','调课通知'],
+      result:'<div class="ais-info"><b>今日课表</b><br>• 08:00 高等数学 B(下) · 数学楼 301<br>• 10:10 大学英语(三) · 外语楼 205<br>• 14:30 数据结构与算法 · 计算机楼 402<br>📌 明天有"中国近现代史"，别忘了带课本</div>',
+      quicks:['academic','grades','secondCls','aiAssist'] },
+    { kw:/征兵|入伍|当兵|参军/i, intent:'征兵入伍',
+      related:['入伍流程','学费补偿','保留学籍','考研加分'],
+      result:'<div class="ais-info"><b>征兵入伍指南</b><br>• 流程：全国征兵网注册 → 学校武装部审核 → 体检 → 政治考核<br>• 学费补偿：最高 16000元/年<br>• 保留学籍：退役后 2 年内可复学<br>• 考研加分：初试 +10 分</div>',
+      quicks:['profile','academic','aiAssist','funding'] },
+    { kw:/预警|学业预警/i, intent:'学业预警',
+      related:['预警等级','帮扶方案','学分不够','挂科处理'],
+      result:'<div class="ais-info"><b>学业预警说明</b><br>• 黄色预警：累计不及格 ≥ 10 学分<br>• 红色预警：累计不及格 ≥ 20 学分或连续 2 学期 GPA<1.5<br>• 如有预警，辅导员会安排约谈和帮扶计划</div>',
+      quicks:['grades','academic','aiAssist','profile'] }
+  ];
+
+  /* --------------- 热门搜索词 --------------- */
+  var HOT = ['成绩查询','请假流程','奖学金','宿舍报修','综测加分','第二课堂','校园卡','就业签约'];
+  var hotBox = $('hot-tags');
+  HOT.forEach(function(p){
+    var s = document.createElement('span');
+    s.className = 'hot-tag'; s.textContent = p;
+    s.onclick = function(){ $('q-input').value = p; ask(); };
+    hotBox.appendChild(s);
+  });
+
+  /* --------------- 匹配 KB --------------- */
+  function matchKB(q){
+    for(var i=0;i<KB.length;i++){ if(KB[i].kw.test(q)) return KB[i]; }
+    return null;
+  }
+
+  /* --------------- 渲染快捷入口 --------------- */
+  function renderQuicks(keys){
+    var box = $('action-grid'); box.innerHTML='';
+    if(!keys||!keys.length){ $('action-area').style.display='none'; return; }
+    $('action-area').style.display='';
+    keys.forEach(function(k){
+      var q = QUICKS[k]; if(!q) return;
+      var a = document.createElement('a');
+      a.className='action-btn'; a.href=q.href;
+      a.innerHTML='<div class="ic" style="background:'+q.bg+'">'+q.ic+'</div><div><div class="tx">'+q.ti+'</div><div class="sd">'+q.sb+'</div></div>';
+      box.appendChild(a);
+    });
+  }
+
+  /* --------------- 渲染关键词 chips --------------- */
+  function renderChips(words){
+    $('followup-area').style.display='';
+    var fc = $('followup-chips'); fc.innerHTML='';
+    words.forEach(function(w){
+      var el = document.createElement('span'); el.className='followup-chip'; el.textContent=w;
+      el.onclick=function(){ $('q-input').value=w; ask(); };
+      fc.appendChild(el);
+    });
+  }
+
+  /* --------------- 搜索历史 --------------- */
+  function addHistory(q){
+    $('history-area').style.display='';
+    var list = $('history-list');
+    var row = document.createElement('div');
+    row.className='history-row';
+    row.innerHTML='<span style="color:var(--gray);font-size:14px">🔍</span><span class="q">'+esc(q)+'</span><span class="t">刚刚</span>';
+    row.querySelector('.q').onclick=function(){ $('q-input').value=q; ask(); };
+    list.insertBefore(row, list.firstChild);
+    while(list.children.length>5) list.removeChild(list.lastChild);
+  }
+
+  function updateMode(){
+    var m = AI.effectiveMode();
+    $('mode-badge').className = 'mode-pill ' + (m==='live'?'live':'demo');
+    $('mode-badge').textContent = m==='live' ? '● Live' : '● Demo';
+  }
+  updateMode();
+
+  /* --------------- 主搜索逻辑 --------------- */
+  async function ask(){
+    var q = $('q-input').value.trim(); if(!q) return;
+    addHistory(q);
+
+    var item = matchKB(q);
+    var intent = item ? item.intent : '通用查询';
+    var related = item ? item.related : ['请假流程','奖学金规则','宿舍报修','综测加分','第二课堂','成绩查询'];
+
+    /* 意图标签 */
+    var pill = $('intent-pill');
+    pill.textContent = 'AI 意图识别：' + intent;
+    pill.style.display = '';
+    pill.style.background = item ? '#E8F3FF' : '#FFF3E8';
+    pill.style.color = item ? 'var(--blue)' : 'var(--orange)';
+
+    /* 快捷入口 */
+    if (item) {
+      renderQuicks(item.quicks);
+    } else {
+      renderQuicks(['aiAssist','academic','funding','leave','dormRepair','employment']);
+    }
+
+    /* 关键词 chips */
+    renderChips(related);
+
+    /* 底部来源 */
+    $('result-foot').style.display='';
+
+    /* 查询结果 */
+    if (item) {
+      $('answer-box').innerHTML = item.result;
+      $('answer-box').innerHTML += '<div class="discl">来源：学工知识库 + 角色权限 · 如需深入咨询请点击「AI 助手」</div>';
+    } else {
+      $('answer-box').innerHTML =
+        '<div class="ais-info">'+
+          '未在本地词典命中"<b>'+esc(q)+'</b>"的精确结果。下方是 AI 根据"<b>学生</b>"角色推荐的高频入口；如需对话式深入咨询，请点击「AI 助手」。'+
+        '</div>';
+      $('answer-box').innerHTML += '<div class="discl">来源：学工知识库 · 如需深入咨询请使用 AI 助手</div>';
+    }
+  }
+
+  $('q-btn').onclick = ask;
+  $('q-input').addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); ask(); } });
+
+  var urlQ = new URLSearchParams(location.search).get('q');
+  if(urlQ){ $('q-input').value = urlQ; setTimeout(ask, 120); }
+})();
+</script>
+</body>
+</html>

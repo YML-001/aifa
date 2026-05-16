@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>就业中心 · 中南大学智慧学工</title>
+<link rel="stylesheet" href="mobile-common.css">
+<style>
+.job-item{display:flex;align-items:flex-start;gap:10px;padding:14px 0;border-bottom:1px solid var(--border)}
+.job-item:last-child{border-bottom:0}
+.job-logo{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;font-weight:700;color:#fff}
+.job-body{flex:1;min-width:0}
+.job-body .pos{font-size:14px;font-weight:600;color:#1D2129}
+.job-body .company{font-size:12px;color:#4E5969;margin-top:2px}
+.job-body .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.job-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+.job-salary{font-size:14px;font-weight:700;color:var(--orange)}
+.job-match{font-size:11px;font-weight:600;padding:2px 8px;border-radius:8px;background:#E8F3FF;color:var(--blue)}
+.job-btn{padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;border:0;background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;cursor:pointer;box-shadow:0 2px 6px rgba(22,93,255,.2)}
+.job-btn:active{transform:scale(.97)}
+.job-btn.done{background:#F2F3F5;color:var(--gray);box-shadow:none}
+.tips-card{background:linear-gradient(135deg,#FFF8E8,#FFF3D6);border-radius:14px;padding:14px;margin-top:12px}
+.tips-card .hd{font-size:14px;font-weight:700;color:#D48806;display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.tips-card .tip{font-size:12px;color:#8C6A18;line-height:1.8}
+.record-item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+.record-item:last-child{border-bottom:0}
+.record-body{flex:1;min-width:0}
+.record-body .pos{font-size:13px;font-weight:600;color:#1D2129}
+.record-body .company{font-size:11px;color:var(--gray);margin-top:2px}
+.record-trail{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<div class="m-nav">
+  <a class="back" href="../mobile-entry.html">‹</a>
+  <div class="title">就业中心</div>
+  <span class="action">🔍</span>
+</div>
+
+<div class="m-body">
+
+  <!-- KPI -->
+  <div class="m-kpis" style="grid-template-columns:repeat(4,1fr)">
+    <div class="m-kpi">
+      <div class="val" style="color:var(--blue)">12</div>
+      <div class="lb">推荐岗位</div>
+    </div>
+    <div class="m-kpi">
+      <div class="val" style="color:var(--cyan)">8</div>
+      <div class="lb">AI匹配</div>
+    </div>
+    <div class="m-kpi">
+      <div class="val" style="color:var(--orange)">3</div>
+      <div class="lb">已投递</div>
+    </div>
+    <div class="m-kpi">
+      <div class="val" style="color:var(--green)">1</div>
+      <div class="lb">面试中</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="m-tabs" style="position:relative;top:auto;border-radius:10px;overflow:hidden;margin-bottom:12px">
+    <a class="on" onclick="switchTab(this,0)">推荐岗位</a>
+    <a onclick="switchTab(this,1)">投递记录</a>
+    <a onclick="switchTab(this,2)">简历</a>
+  </div>
+
+  <!-- Tab 0: 推荐岗位 -->
+  <div class="tab-pane" id="tp0">
+    <div class="m-card">
+      <div class="m-card-ti"><span class="bar"></span>AI 智能推荐</div>
+
+      <div class="job-item">
+        <div class="job-logo" style="background:linear-gradient(135deg,#165DFF,#4080FF)">华</div>
+        <div class="job-body">
+          <div class="pos">软件开发工程师</div>
+          <div class="company">华为技术有限公司</div>
+          <div class="tags">
+            <span class="chip blue">长沙</span>
+            <span class="chip">本科及以上</span>
+            <span class="chip green">五险一金</span>
+          </div>
+        </div>
+        <div class="job-right">
+          <span class="job-salary">18-30K</span>
+          <span class="job-match">匹配 96%</span>
+          <button class="job-btn">投递</button>
+        </div>
+      </div>
+
+      <div class="job-item">
+        <div class="job-logo" style="background:linear-gradient(135deg,var(--green),#52C41A)">腾</div>
+        <div class="job-body">
+          <div class="pos">后端开发实习生</div>
+          <div class="company">腾讯科技（深圳）</div>
+          <div class="tags">
+            <span class="chip blue">深圳</span>
+            <span class="chip">实习</span>
+            <span class="chip green">免费三餐</span>
+          </div>
+        </div>
+        <div class="job-right">
+          <span class="job-salary">200-300/天</span>
+          <span class="job-match">匹配 93%</span>
+          <button class="job-btn">投递</button>
+        </div>
+      </div>
+
+      <div class="job-item">
+        <div class="job-logo" style="background:linear-gradient(135deg,var(--orange),#FFA940)">阿</div>
+        <div class="job-body">
+          <div class="pos">算法工程师</div>
+          <div class="company">阿里巴巴集团</div>
+          <div class="tags">
+            <span class="chip blue">杭州</span>
+            <span class="chip">硕士优先</span>
+            <span class="chip green">股票期权</span>
+          </div>
+        </div>
+        <div class="job-right">
+          <span class="job-salary">25-45K</span>
+          <span class="job-match">匹配 89%</span>
+          <button class="job-btn">投递</button>
+        </div>
+      </div>
+
+      <div class="job-item">
+        <div class="job-logo" style="background:linear-gradient(135deg,var(--purple),#A855F7)">中</div>
+        <div class="job-body">
+          <div class="pos">数据分析师</div>
+          <div class="company">中国建设银行</div>
+          <div class="tags">
+            <span class="chip blue">长沙</span>
+            <span class="chip">本科及以上</span>
+            <span class="chip green">国企编制</span>
+          </div>
+        </div>
+        <div class="job-right">
+          <span class="job-salary">12-20K</span>
+          <span class="job-match">匹配 85%</span>
+          <button class="job-btn">投递</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 1: 投递记录 -->
+  <div class="tab-pane" id="tp1" style="display:none">
+    <div class="m-card">
+      <div class="m-card-ti"><span class="bar"></span>投递记录</div>
+
+      <div class="record-item">
+        <div class="job-logo" style="background:linear-gradient(135deg,#165DFF,#4080FF);width:36px;height:36px;font-size:14px;border-radius:10px">字</div>
+        <div class="record-body">
+          <div class="pos">前端开发工程师</div>
+          <div class="company">字节跳动 · 2026-05-10 投递</div>
+        </div>
+        <div class="record-trail">
+          <span class="m-st ok">面试中</span>
+          <span style="font-size:10px;color:var(--gray)">5月20日一面</span>
+        </div>
+      </div>
+
+      <div class="record-item">
+        <div class="job-logo" style="background:linear-gradient(135deg,var(--green),#52C41A);width:36px;height:36px;font-size:14px;border-radius:10px">美</div>
+        <div class="record-body">
+          <div class="pos">Java 开发工程师</div>
+          <div class="company">美团 · 2026-05-06 投递</div>
+        </div>
+        <div class="record-trail">
+          <span class="m-st warn">简历筛选</span>
+        </div>
+      </div>
+
+      <div class="record-item">
+        <div class="job-logo" style="background:linear-gradient(135deg,var(--red),#FF7875);width:36px;height:36px;font-size:14px;border-radius:10px">网</div>
+        <div class="record-body">
+          <div class="pos">产品运营实习生</div>
+          <div class="company">网易 · 2026-04-28 投递</div>
+        </div>
+        <div class="record-trail">
+          <span class="m-st gray">已查看</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 2: 简历 -->
+  <div class="tab-pane" id="tp2" style="display:none">
+    <div class="m-card">
+      <div class="m-card-ti"><span class="bar"></span>我的简历</div>
+      <div class="m-list-item">
+        <div class="lead" style="background:linear-gradient(135deg,var(--blue),var(--blue2))">📄</div>
+        <div class="body">
+          <div class="ttl">主简历 — 技术方向</div>
+          <div class="sub">更新于 2026-05-12 · 完整度 90%</div>
+        </div>
+        <span class="arr">›</span>
+      </div>
+      <div class="m-list-item">
+        <div class="lead" style="background:linear-gradient(135deg,var(--purple),#A855F7)">📄</div>
+        <div class="body">
+          <div class="ttl">副简历 — 产品方向</div>
+          <div class="sub">更新于 2026-04-20 · 完整度 72%</div>
+        </div>
+        <span class="arr">›</span>
+      </div>
+      <div class="mt12">
+        <div class="m-progress mb8"><span style="width:90%"></span></div>
+        <div class="fx" style="justify-content:space-between">
+          <span class="muted">简历完整度</span>
+          <span style="font-size:13px;font-weight:700;color:var(--blue)">90%</span>
+        </div>
+      </div>
+      <button class="m-btn m-btn-outline mt12" style="font-size:12px">🤖 AI 优化简历</button>
+    </div>
+  </div>
+
+  <!-- 求职贴士 -->
+  <div class="tips-card">
+    <div class="hd">💡 求职小贴士</div>
+    <div class="tip">
+      · 面试前务必了解公司业务和岗位要求<br>
+      · 简历中量化成果：如"优化性能提升 30%"<br>
+      · 保持简历更新，建议每 2 周检查一次<br>
+      · 善用校友资源，中南校友遍布各大企业
+    </div>
+  </div>
+
+</div>
+
+<div class="m-tabbar">
+  <a class="m-tab" href="../mobile-entry.html"><span class="tic">🏠</span>首页</a>
+  <a class="m-tab" href="student-schedule.html"><span class="tic">📅</span>课表</a>
+  <a class="m-tab" href="student-messages.html"><span class="tic">📨</span>消息</a>
+  <a class="m-tab" href="student-profile.html"><span class="tic">👤</span>我的</a>
+</div>
+
+<script src="../ai-client.js"></script>
+<script src="../ai-search-popup.js"></script>
+<script src="../ai-float-ball.js"></script>
+<script src="../ai-module-sdk.js"></script>
+<script src="../ai-page-enhance.js"></script>
+<script>
+function switchTab(el, idx) {
+  el.closest('.m-tabs').querySelectorAll('a').forEach(a => a.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.tab-pane').forEach((p, i) => p.style.display = i === idx ? '' : 'none');
+}
+</script>
+</body>
+</html>

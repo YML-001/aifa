@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>成绩查询 · 中南大学智慧学工</title>
+<link rel="stylesheet" href="mobile-common.css">
+<style>
+.grade-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
+.gk{background:#fff;border-radius:12px;padding:12px 6px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.gk .v{font-size:18px;font-weight:700}
+.gk .l{font-size:9px;color:var(--gray);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.grade-summary{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;border-radius:14px;padding:16px;margin-bottom:14px;display:flex;align-items:center;gap:14px}
+.grade-summary .gpa-circle{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.grade-summary .gpa-circle .n{font-size:24px;font-weight:800;line-height:1}
+.grade-summary .gpa-circle .l{font-size:10px;opacity:.8;margin-top:2px}
+.grade-summary .right{flex:1;min-width:0}
+.grade-summary .right .row{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;opacity:.9}
+.grade-summary .right .row b{opacity:1}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -14px;padding:0 14px}
+.m-table thead th{position:sticky;top:0;background:#fff;z-index:2;box-shadow:0 1px 0 #E5E6EB}
+.score-high{color:var(--green);font-weight:700}
+.score-mid{color:var(--orange);font-weight:700}
+.score-low{color:var(--red);font-weight:700}
+.trend-card{background:#fff;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 1px 6px rgba(0,0,0,.04)}
+.trend-bars{display:flex;align-items:flex-end;gap:12px;height:100px;padding:10px 0}
+.trend-bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.trend-bar .bar{width:100%;border-radius:6px 6px 0 0;background:linear-gradient(180deg,var(--blue),var(--cyan));transition:height .3s}
+.trend-bar .val{font-size:11px;font-weight:600;color:#1D2129}
+.trend-bar .sem{font-size:9px;color:var(--gray);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<div class="m-nav">
+  <a class="back" href="../mobile-entry.html">‹</a>
+  <div class="title">成绩查询</div>
+  <span class="action">📊</span>
+</div>
+
+<div class="m-body">
+
+  <!-- GPA 总览卡 -->
+  <div class="grade-summary">
+    <div class="gpa-circle">
+      <div class="n">3.62</div>
+      <div class="l">GPA</div>
+    </div>
+    <div class="right">
+      <div class="row"><span>累计学分</span><b>48.0</b></div>
+      <div class="row"><span>已修课程</span><b>16 门</b></div>
+      <div class="row"><span>年级排名</span><b>8 / 126</b></div>
+      <div class="row"><span>最高绩点</span><b>4.0（高数）</b></div>
+    </div>
+  </div>
+
+  <!-- KPI 小卡 -->
+  <div class="grade-kpis">
+    <div class="gk"><div class="v" style="color:var(--blue)">3.62</div><div class="l">GPA</div></div>
+    <div class="gk"><div class="v" style="color:var(--green)">48.0</div><div class="l">累计学分</div></div>
+    <div class="gk"><div class="v" style="color:var(--orange)">16</div><div class="l">已修课程</div></div>
+    <div class="gk"><div class="v" style="color:var(--purple)">8/126</div><div class="l">排名</div></div>
+  </div>
+
+  <!-- Tab 切换 -->
+  <div class="m-tabs" style="position:static;margin:0 -14px 14px;border-radius:0">
+    <a class="on" href="javascript:;">最新学期</a>
+    <a href="javascript:;">历年成绩</a>
+  </div>
+
+  <!-- 成绩表 -->
+  <div class="m-card" style="padding:10px">
+    <div class="m-card-ti" style="padding:4px 6px"><span class="bar"></span> 2024-2025 秋季学期</div>
+    <div class="table-wrap">
+      <table class="m-table">
+        <thead>
+          <tr><th>课程名</th><th>学分</th><th>成绩</th><th>绩点</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>高等数学 A（上）</td><td>5.0</td><td class="score-high">95</td><td>4.0</td></tr>
+          <tr><td>数据结构与算法</td><td>4.0</td><td class="score-high">91</td><td>3.9</td></tr>
+          <tr><td>大学英语（三）</td><td>3.0</td><td class="score-high">88</td><td>3.6</td></tr>
+          <tr><td>线性代数</td><td>3.0</td><td class="score-high">90</td><td>3.8</td></tr>
+          <tr><td>马克思主义基本原理</td><td>3.0</td><td class="score-mid">82</td><td>3.2</td></tr>
+          <tr><td>概率论与数理统计</td><td>3.0</td><td class="score-high">86</td><td>3.4</td></tr>
+          <tr><td>计算机组成原理</td><td>3.5</td><td class="score-high">89</td><td>3.7</td></tr>
+          <tr><td>体育（三）</td><td>1.0</td><td class="score-high">92</td><td>3.9</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="text-align:center;padding:10px 0">
+      <span class="muted">本学期加权平均分 <b style="color:var(--blue)">89.3</b> · 学期 GPA <b style="color:var(--blue)">3.68</b></span>
+    </div>
+  </div>
+
+  <!-- GPA 趋势 -->
+  <div class="trend-card">
+    <div class="m-card-ti"><span class="bar"></span> GPA 趋势</div>
+    <div class="trend-bars">
+      <div class="trend-bar">
+        <div class="val">3.45</div>
+        <div class="bar" style="height:70%"></div>
+        <div class="sem">22秋</div>
+      </div>
+      <div class="trend-bar">
+        <div class="val">3.52</div>
+        <div class="bar" style="height:76%"></div>
+        <div class="sem">23春</div>
+      </div>
+      <div class="trend-bar">
+        <div class="val">3.58</div>
+        <div class="bar" style="height:82%"></div>
+        <div class="sem">23秋</div>
+      </div>
+      <div class="trend-bar">
+        <div class="val">3.60</div>
+        <div class="bar" style="height:86%"></div>
+        <div class="sem">24春</div>
+      </div>
+      <div class="trend-bar">
+        <div class="val">3.68</div>
+        <div class="bar" style="height:94%;background:linear-gradient(180deg,var(--green),var(--cyan))"></div>
+        <div class="sem">24秋</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:4px">
+      <span class="chip green" style="font-size:11px">📈 GPA 连续 5 学期上升，趋势良好</span>
+    </div>
+  </div>
+
+  <!-- 学分完成度 -->
+  <div class="m-card">
+    <div class="m-card-ti"><span class="bar"></span> 学分完成度</div>
+    <div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>必修学分</span><span style="color:var(--blue);font-weight:600">38.0 / 85.0</span></div>
+      <div class="m-progress"><span style="width:44.7%"></span></div>
+    </div>
+    <div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>选修学分</span><span style="color:var(--cyan);font-weight:600">10.0 / 30.0</span></div>
+      <div class="m-progress"><span style="width:33.3%;background:linear-gradient(90deg,var(--cyan),var(--green))"></span></div>
+    </div>
+    <div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>实践环节</span><span style="color:var(--orange);font-weight:600">0 / 15.0</span></div>
+      <div class="m-progress"><span style="width:0%"></span></div>
+    </div>
+    <div class="muted" style="text-align:center;margin-top:10px">总进度 48.0 / 130.0 学分 · 36.9%</div>
+  </div>
+
+  <div class="m-foot">
+    © 2026 中南大学 智慧学工 AI 助手<br>产品原型 V1.0 · 仅演示用途
+  </div>
+</div>
+
+<!-- tabbar -->
+<div class="m-tabbar">
+  <a class="m-tab" href="../mobile-entry.html"><span class="tic">🏠</span>首页</a>
+  <a class="m-tab" href="student-schedule.html"><span class="tic">📅</span>课表</a>
+  <a class="m-tab" href="student-messages.html"><span class="tic">📨</span>消息</a>
+  <a class="m-tab" href="student-profile.html"><span class="tic">👤</span>我的</a>
+</div>
+
+<script src="../ai-client.js"></script>
+<script src="../ai-search-popup.js"></script>
+<script src="../ai-float-ball.js"></script>
+<script src="../ai-module-sdk.js"></script>
+<script src="../ai-page-enhance.js"></script>
+</body>
+</html>

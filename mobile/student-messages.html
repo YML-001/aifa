@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>消息中心 · 中南大学智慧学工</title>
+<link rel="stylesheet" href="mobile-common.css">
+<style>
+.msg-item{display:flex;align-items:flex-start;gap:12px;padding:14px;background:#fff;border-bottom:1px solid var(--border);position:relative}
+.msg-item:active{background:#F7F8FA}
+.msg-item.unread{background:#FAFCFF}
+.msg-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;flex-shrink:0}
+.msg-body{flex:1;min-width:0}
+.msg-title{font-size:14px;font-weight:600;color:#1D2129;display:flex;align-items:center;gap:6px}
+.msg-title .dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0}
+.msg-preview{font-size:12px;color:var(--gray);margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.msg-meta{display:flex;align-items:center;gap:6px;margin-top:6px}
+.msg-time{font-size:11px;color:#C9CDD4}
+.msg-tag{font-size:10px;padding:1px 6px;border-radius:4px}
+.msg-tag.urgent{background:#FEECEC;color:var(--red)}
+.msg-tag.approval{background:#E8F3FF;color:var(--blue)}
+.msg-tag.notice{background:#E8FFEA;color:var(--green)}
+.msg-tag.system{background:#F2F3F5;color:var(--gray)}
+</style>
+</head>
+<body>
+
+<div class="m-nav">
+  <a class="back" href="../mobile-entry.html">‹</a>
+  <div class="title">消息中心</div>
+  <span class="action">✓</span>
+</div>
+
+<div class="m-tabs">
+  <a class="on" href="#">全部</a>
+  <a href="#">审批</a>
+  <a href="#">通知</a>
+  <a href="#">系统</a>
+</div>
+
+<div>
+  <!-- 1. 请假审批通过 -->
+  <div class="msg-item">
+    <div class="msg-icon" style="background:var(--blue)">🗓️</div>
+    <div class="msg-body">
+      <div class="msg-title">请假审批已通过</div>
+      <div class="msg-preview">你提交的 5 月 10 日—12 日病假申请已通过辅导员审批，请注意按时销假。</div>
+      <div class="msg-meta">
+        <span class="msg-time">2小时前</span>
+        <span class="msg-tag approval">审批</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 综测材料补交提醒 -->
+  <div class="msg-item unread">
+    <div class="msg-icon" style="background:var(--orange)">📎</div>
+    <div class="msg-body">
+      <div class="msg-title"><span class="dot"></span>综测材料补交提醒</div>
+      <div class="msg-preview">你的 2025-2026 学年综测材料仍缺少竞赛证书扫描件，请在 5 月 20 日前补充提交。</div>
+      <div class="msg-meta">
+        <span class="msg-time">昨天</span>
+        <span class="msg-tag urgent">紧急</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 奖学金公示通知 -->
+  <div class="msg-item">
+    <div class="msg-icon" style="background:var(--green)">🏅</div>
+    <div class="msg-body">
+      <div class="msg-title">奖学金公示通知</div>
+      <div class="msg-preview">2025-2026 学年校级奖学金评审结果已公示，公示期 5 天，如有异议请及时反馈。</div>
+      <div class="msg-meta">
+        <span class="msg-time">2天前</span>
+        <span class="msg-tag notice">通知</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 宿舍报修完成 -->
+  <div class="msg-item">
+    <div class="msg-icon" style="background:var(--cyan)">🔧</div>
+    <div class="msg-body">
+      <div class="msg-title">宿舍报修已完成</div>
+      <div class="msg-preview">你提交的 A 栋 301 室空调维修工单已处理完成，维修师傅已确认修复，请查验。</div>
+      <div class="msg-meta">
+        <span class="msg-time">3天前</span>
+        <span class="msg-tag notice">通知</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 校园卡充值成功 -->
+  <div class="msg-item">
+    <div class="msg-icon" style="background:var(--purple)">💳</div>
+    <div class="msg-body">
+      <div class="msg-title">校园卡充值成功</div>
+      <div class="msg-preview">校园卡在线充值 100.00 元已到账，当前余额 236.50 元。</div>
+      <div class="msg-meta">
+        <span class="msg-time">5天前</span>
+        <span class="msg-tag system">系统</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. 密码修改提醒 -->
+  <div class="msg-item unread">
+    <div class="msg-icon" style="background:var(--gray)">🔒</div>
+    <div class="msg-body">
+      <div class="msg-title"><span class="dot"></span>密码修改提醒</div>
+      <div class="msg-preview">你的统一身份认证密码已超过 90 天未修改，为保障账号安全，建议尽快更换。</div>
+      <div class="msg-meta">
+        <span class="msg-time">1周前</span>
+        <span class="msg-tag system">系统</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="m-tabbar">
+  <a class="m-tab" href="../mobile-entry.html"><span class="tic">🏠</span>首页</a>
+  <a class="m-tab" href="student-schedule.html"><span class="tic">📅</span>课表</a>
+  
+  <a class="m-tab on" href="student-messages.html"><span class="tic">📨</span>消息</a>
+  <a class="m-tab" href="student-profile.html"><span class="tic">👤</span>我的</a>
+</div>
+
+<script src="../ai-client.js"></script>
+<script src="../ai-search-popup.js"></script>
+<script src="../ai-float-ball.js"></script>
+<script src="../ai-module-sdk.js"></script>
+</body>
+</html>

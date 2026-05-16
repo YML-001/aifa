@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>校园卡 · 中南大学智慧学工</title>
+<link rel="stylesheet" href="mobile-common.css">
+<style>
+.card-vis{background:linear-gradient(135deg,#0E42B5,var(--blue),var(--cyan));border-radius:16px;padding:20px;color:#fff;margin-bottom:14px;position:relative;overflow:hidden;box-shadow:0 4px 16px rgba(22,93,255,.3)}
+.card-vis::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.08)}
+.card-vis .cv-label{font-size:11px;opacity:.8}
+.card-vis .cv-num{font-size:14px;margin-top:2px;letter-spacing:2px;font-family:monospace}
+.card-vis .cv-balance{font-size:32px;font-weight:700;margin-top:12px}
+.card-vis .cv-name{font-size:13px;margin-top:6px;opacity:.9}
+.card-vis .cv-school{font-size:10px;opacity:.6;margin-top:2px}
+.quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+.quick-btn{background:#fff;border-radius:12px;padding:16px 12px;text-align:center;box-shadow:0 1px 6px rgba(0,0,0,.04);cursor:pointer;border:0;font-family:inherit;transition:all .15s}
+.quick-btn:active{transform:scale(.96);background:#F7F8FA}
+.quick-btn .qb-icon{font-size:28px;margin-bottom:6px}
+.quick-btn .qb-label{font-size:13px;font-weight:600;color:#1D2129}
+.quick-btn .qb-sub{font-size:10px;color:var(--gray);margin-top:2px}
+.txn-item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+.txn-item:last-child{border-bottom:0}
+.txn-item .ti{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.txn-item .tc{flex:1;min-width:0}
+.txn-item .tt{font-size:13px;font-weight:600;color:#1D2129}
+.txn-item .td{font-size:11px;color:var(--gray);margin-top:2px}
+.txn-item .ta{font-size:14px;font-weight:700;flex-shrink:0}
+.txn-item .ta.out{color:var(--red)}
+.txn-item .ta.in{color:var(--green)}
+.auto-card{background:linear-gradient(135deg,#F2F6FF,#E8F3FF);border:1px solid #D0E4FF;border-radius:14px;padding:14px;margin-bottom:12px}
+.auto-card .hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.auto-card .hd .label{font-size:14px;font-weight:700}
+.toggle{width:44px;height:24px;border-radius:12px;background:#C9CDD4;position:relative;cursor:pointer;transition:background .2s;border:0}
+.toggle.on{background:var(--green)}
+.toggle::after{content:"";position:absolute;left:2px;top:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.toggle.on::after{transform:translateX(20px)}
+.auto-card .desc{font-size:12px;color:#4E5969;line-height:1.6}
+</style>
+</head>
+<body>
+
+<div class="m-nav">
+  <a class="back" href="../mobile-entry.html">‹</a>
+  <div class="title">校园卡</div>
+  <span class="action">⚙️</span>
+</div>
+
+<div class="m-body">
+
+  <!-- 卡片可视化 -->
+  <div class="card-vis">
+    <div class="cv-label">卡号</div>
+    <div class="cv-num">**** **** **** 5678</div>
+    <div class="cv-balance">¥186.50</div>
+    <div class="cv-name">张明辉 · 计算机科学与技术</div>
+    <div class="cv-school">中南大学 · 2024 级本科</div>
+  </div>
+
+  <!-- 快捷操作 -->
+  <div class="quick-grid">
+    <button class="quick-btn" onclick="alert('充值功能演示')">
+      <div class="qb-icon">💰</div>
+      <div class="qb-label">充值</div>
+      <div class="qb-sub">支付宝/微信</div>
+    </button>
+    <button class="quick-btn" onclick="alert('挂失功能演示')">
+      <div class="qb-icon">🔒</div>
+      <div class="qb-label">挂失</div>
+      <div class="qb-sub">立即冻结</div>
+    </button>
+    <button class="quick-btn" onclick="alert('解挂功能演示')">
+      <div class="qb-icon">🔓</div>
+      <div class="qb-label">解挂</div>
+      <div class="qb-sub">恢复使用</div>
+    </button>
+    <button class="quick-btn" onclick="alert('消费记录功能演示')">
+      <div class="qb-icon">📊</div>
+      <div class="qb-label">消费记录</div>
+      <div class="qb-sub">本月 ¥462.30</div>
+    </button>
+  </div>
+
+  <!-- 近期交易 -->
+  <div class="m-card">
+    <div class="m-card-ti"><span class="bar"></span> 近期交易</div>
+
+    <div class="txn-item">
+      <div class="ti" style="background:#FFF3E8">🍜</div>
+      <div class="tc">
+        <div class="tt">南校区二食堂</div>
+        <div class="td">今天 12:15 · POS消费</div>
+      </div>
+      <div class="ta out">-¥12.50</div>
+    </div>
+
+    <div class="txn-item">
+      <div class="ti" style="background:#E8F3FF">🛒</div>
+      <div class="tc">
+        <div class="tt">校园超市（南苑店）</div>
+        <div class="td">今天 09:32 · POS消费</div>
+      </div>
+      <div class="ta out">-¥8.80</div>
+    </div>
+
+    <div class="txn-item">
+      <div class="ti" style="background:#E8FFEA">💰</div>
+      <div class="tc">
+        <div class="tt">支付宝在线充值</div>
+        <div class="td">昨天 20:05 · 在线充值</div>
+      </div>
+      <div class="ta in">+¥100.00</div>
+    </div>
+
+    <div class="txn-item">
+      <div class="ti" style="background:#FFF3E8">🍚</div>
+      <div class="tc">
+        <div class="tt">南校区一食堂</div>
+        <div class="td">昨天 17:48 · POS消费</div>
+      </div>
+      <div class="ta out">-¥15.00</div>
+    </div>
+
+    <div class="txn-item">
+      <div class="ti" style="background:#F5E8FF">📚</div>
+      <div class="tc">
+        <div class="tt">图书馆打印室</div>
+        <div class="td">昨天 14:22 · POS消费</div>
+      </div>
+      <div class="ta out">-¥3.20</div>
+    </div>
+  </div>
+
+  <!-- 自动充值设置 -->
+  <div class="auto-card">
+    <div class="hd">
+      <span class="label">⚡ 自动充值</span>
+      <button class="toggle on" id="auto-toggle"></button>
+    </div>
+    <div class="desc">
+      余额低于 <strong>¥30.00</strong> 时，自动从绑定的支付宝账户充值 <strong>¥100.00</strong>。
+      <br>当前绑定：支付宝 138****6789
+    </div>
+  </div>
+
+  <div class="m-foot">
+    © 2026 中南大学 智慧学工 AI 助手<br>产品原型 V1.0 · 仅演示用途
+  </div>
+</div>
+
+<div class="m-tabbar">
+  <a class="m-tab" href="../mobile-entry.html"><span class="tic">🏠</span>首页</a>
+  <a class="m-tab" href="student-schedule.html"><span class="tic">📅</span>课表</a>
+  <a class="m-tab" href="student-messages.html"><span class="tic">📨</span>消息</a>
+  <a class="m-tab" href="student-profile.html"><span class="tic">👤</span>我的</a>
+</div>
+
+<script src="../ai-client.js"></script>
+<script src="../ai-search-popup.js"></script>
+<script src="../ai-float-ball.js"></script>
+<script src="../ai-module-sdk.js"></script>
+<script>
+(function(){
+  var toggle = document.getElementById('auto-toggle');
+  toggle.addEventListener('click', function(){
+    toggle.classList.toggle('on');
+    alert(toggle.classList.contains('on') ? '已开启自动充值' : '已关闭自动充值');
+  });
+})();
+</script>
+</body>
+</html>

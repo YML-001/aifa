@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>第二课堂 · 中南大学智慧学工</title>
+<link rel="stylesheet" href="mobile-common.css">
+<style>
+.progress-card{background:linear-gradient(135deg,#165DFF,#4080FF);border-radius:14px;padding:16px;color:#fff;margin-bottom:12px}
+.progress-card .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.progress-card .hd .t{font-size:15px;font-weight:700}
+.progress-card .hd .pct{font-size:24px;font-weight:800}
+.progress-bar-outer{height:8px;background:rgba(255,255,255,.25);border-radius:4px;overflow:hidden}
+.progress-bar-inner{height:100%;border-radius:4px;background:linear-gradient(90deg,#36CFC9,#fff);transition:width .5s}
+.progress-desc{display:flex;justify-content:space-between;font-size:11px;opacity:.8;margin-top:6px}
+.credit-item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+.credit-item:last-child{border-bottom:0}
+.credit-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;flex-shrink:0}
+.credit-body{flex:1;min-width:0}
+.credit-body .nm{font-size:13px;font-weight:600;color:#1D2129}
+.credit-body .desc{font-size:11px;color:var(--gray);margin-top:2px}
+.credit-val{font-size:16px;font-weight:700;flex-shrink:0}
+.avail-item{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+.avail-item:last-child{border-bottom:0}
+.avail-body{flex:1;min-width:0}
+.avail-body .nm{font-size:13px;font-weight:600;color:#1D2129}
+.avail-body .meta{font-size:11px;color:var(--gray);margin-top:3px}
+.avail-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
+.avail-btn{padding:5px 12px;border-radius:8px;font-size:11px;font-weight:600;border:1.5px solid var(--blue);color:var(--blue);background:#fff;cursor:pointer}
+.avail-btn:active{background:#E8F3FF}
+</style>
+</head>
+<body>
+
+<div class="m-nav">
+  <a class="back" href="../mobile-entry.html">‹</a>
+  <div class="title">第二课堂</div>
+  <span class="action">📊</span>
+</div>
+
+<div class="m-body">
+
+  <!-- KPI -->
+  <div class="m-kpis" style="grid-template-columns:repeat(3,1fr)">
+    <div class="m-kpi">
+      <div class="val" style="color:var(--blue)">18<span style="font-size:12px;font-weight:400;color:var(--gray)">/24</span></div>
+      <div class="lb">已获学分</div>
+    </div>
+    <div class="m-kpi">
+      <div class="val" style="color:var(--green)">75%</div>
+      <div class="lb">完成率</div>
+    </div>
+    <div class="m-kpi">
+      <div class="val" style="color:var(--orange)">6</div>
+      <div class="lb">本学期学分</div>
+    </div>
+  </div>
+
+  <!-- 学分完成进度 -->
+  <div class="progress-card">
+    <div class="hd">
+      <span class="t">学分完成度</span>
+      <span class="pct">75%</span>
+    </div>
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" style="width:75%"></div>
+    </div>
+    <div class="progress-desc">
+      <span>已获 18 学分</span>
+      <span>目标 24 学分</span>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="m-tabs" style="position:relative;top:auto;border-radius:10px;overflow:hidden;margin-bottom:12px">
+    <a class="on" onclick="switchTab(this,0)">学分明细</a>
+    <a onclick="switchTab(this,1)">可报名活动</a>
+  </div>
+
+  <!-- Tab 0: 学分明细 -->
+  <div class="tab-pane" id="tp0">
+    <div class="m-card">
+      <div class="m-card-ti"><span class="bar"></span>已获学分记录</div>
+
+      <div class="credit-item">
+        <div class="credit-ic" style="background:linear-gradient(135deg,var(--green),#52C41A)">🤝</div>
+        <div class="credit-body">
+          <div class="nm">志愿服务 — 社区关爱老人活动</div>
+          <div class="desc">2026-03-15 · 认定通过</div>
+        </div>
+        <div class="credit-val" style="color:var(--green)">+3分</div>
+      </div>
+
+      <div class="credit-item">
+        <div class="credit-ic" style="background:linear-gradient(135deg,var(--blue),var(--blue2))">🏆</div>
+        <div class="credit-body">
+          <div class="nm">竞赛获奖 — 省数学建模三等奖</div>
+          <div class="desc">2025-12-20 · 认定通过</div>
+        </div>
+        <div class="credit-val" style="color:var(--blue)">+4分</div>
+      </div>
+
+      <div class="credit-item">
+        <div class="credit-ic" style="background:linear-gradient(135deg,var(--purple),#A855F7)">🎭</div>
+        <div class="credit-body">
+          <div class="nm">社团活动 — 话剧社年度演出</div>
+          <div class="desc">2025-11-08 · 认定通过</div>
+        </div>
+        <div class="credit-val" style="color:var(--purple)">+2分</div>
+      </div>
+
+      <div class="credit-item">
+        <div class="credit-ic" style="background:linear-gradient(135deg,var(--orange),#FFA940)">📖</div>
+        <div class="credit-body">
+          <div class="nm">讲座报告 — 人工智能前沿讲座</div>
+          <div class="desc">2026-04-10 · 认定通过</div>
+        </div>
+        <div class="credit-val" style="color:var(--orange)">+1分</div>
+      </div>
+
+      <div class="credit-item">
+        <div class="credit-ic" style="background:linear-gradient(135deg,var(--cyan),#13C2C2)">🏃</div>
+        <div class="credit-body">
+          <div class="nm">体育锻炼 — 校园马拉松</div>
+          <div class="desc">2026-04-22 · 认定通过</div>
+        </div>
+        <div class="credit-val" style="color:var(--cyan)">+2分</div>
+      </div>
+
+      <div class="credit-item">
+        <div class="credit-ic" style="background:linear-gradient(135deg,#F5222D,#FF7875)">🎖</div>
+        <div class="credit-body">
+          <div class="nm">社会实践 — 暑期三下乡</div>
+          <div class="desc">2025-09-05 · 认定通过</div>
+        </div>
+        <div class="credit-val" style="color:#F5222D">+6分</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 1: 可报名活动 -->
+  <div class="tab-pane" id="tp1" style="display:none">
+    <div class="m-card">
+      <div class="m-card-ti"><span class="bar"></span>可获学分活动</div>
+
+      <div class="avail-item">
+        <div class="credit-ic" style="background:linear-gradient(135deg,var(--green),#52C41A)">🌿</div>
+        <div class="avail-body">
+          <div class="nm">环保志愿者 — 岳麓山清洁行动</div>
+          <div class="meta">📅 2026-06-01 · 👥 名额 50 · 🎯 志愿服务 +2分</div>
+        </div>
+        <div class="avail-right">
+          <span class="chip green">+2分</span>
+          <button class="avail-btn">报名</button>
+        </div>
+      </div>
+
+      <div class="avail-item">
+        <div class="credit-ic" style="background:linear-gradient(135deg,var(--blue),var(--blue2))">🎓</div>
+        <div class="avail-body">
+          <div class="nm">学术沙龙 — 大数据与智慧校园</div>
+          <div class="meta">📅 2026-05-28 · 👥 名额 80 · 🎯 讲座报告 +1分</div>
+        </div>
+        <div class="avail-right">
+          <span class="chip blue">+1分</span>
+          <button class="avail-btn">报名</button>
+        </div>
+      </div>
+
+      <div class="avail-item">
+        <div class="credit-ic" style="background:linear-gradient(135deg,var(--orange),#FFA940)">🎨</div>
+        <div class="avail-body">
+          <div class="nm">文化艺术节 — 书画摄影展</div>
+          <div class="meta">📅 2026-06-10 · 👥 名额 120 · 🎯 文体活动 +2分</div>
+        </div>
+        <div class="avail-right">
+          <span class="chip warn">+2分</span>
+          <button class="avail-btn">报名</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-card">
+      <div class="m-card-ti"><span class="bar"></span>AI 学分规划建议</div>
+      <div class="muted" style="line-height:1.8">
+        你还需 <b style="color:var(--blue)">6 学分</b> 达到毕业要求。建议优先参加：<br>
+        · <b>志愿服务类</b>（差 2 学分）<br>
+        · <b>文体活动类</b>（差 2 学分）<br>
+        · <b>讲座报告类</b>（差 2 学分）
+      </div>
+      <button class="m-btn m-btn-outline mt8" style="width:auto;margin:8px auto 0;padding:8px 20px;font-size:12px">🤖 查看完整规划</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="m-tabbar">
+  <a class="m-tab" href="../mobile-entry.html"><span class="tic">🏠</span>首页</a>
+  <a class="m-tab" href="student-schedule.html"><span class="tic">📅</span>课表</a>
+  <a class="m-tab" href="student-messages.html"><span class="tic">📨</span>消息</a>
+  <a class="m-tab" href="student-profile.html"><span class="tic">👤</span>我的</a>
+</div>
+
+<script src="../ai-client.js"></script>
+<script src="../ai-search-popup.js"></script>
+<script src="../ai-float-ball.js"></script>
+<script src="../ai-module-sdk.js"></script>
+<script src="../ai-page-enhance.js"></script>
+<script>
+function switchTab(el, idx) {
+  el.closest('.m-tabs').querySelectorAll('a').forEach(a => a.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.tab-pane').forEach((p, i) => p.style.display = i === idx ? '' : 'none');
+}
+</script>
+</body>
+</html>

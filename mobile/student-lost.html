@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>失物招领 · 中南大学智慧学工</title>
+<link rel="stylesheet" href="mobile-common.css">
+<style>
+.tab-panels .panel{display:none}
+.tab-panels .panel.on{display:block}
+.post-item{background:#fff;border-radius:12px;padding:12px;margin-bottom:10px;box-shadow:0 1px 6px rgba(0,0,0,.04);display:flex;gap:10px}
+.post-item .pi-img{width:72px;height:72px;border-radius:10px;background:#F2F3F5;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.post-item .pi-body{flex:1;min-width:0}
+.post-item .pi-name{font-size:14px;font-weight:700;color:#1D2129;margin-bottom:4px}
+.post-item .pi-meta{font-size:11px;color:var(--gray);line-height:1.6}
+.post-item .pi-foot{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.fab{position:fixed;bottom:calc(70px + var(--safe-b));right:16px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;border:0;font-size:24px;box-shadow:0 4px 16px rgba(22,93,255,.35);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:90}
+.fab:active{transform:scale(.9)}
+.mine-empty{text-align:center;padding:40px 0;color:var(--gray)}
+.mine-empty .eic{font-size:40px;margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<div class="m-nav">
+  <a class="back" href="../mobile-entry.html">‹</a>
+  <div class="title">失物招领</div>
+  <span class="action">📋</span>
+</div>
+
+<!-- Tabs -->
+<div class="m-tabs" id="lost-tabs">
+  <a class="on" data-tab="seek">寻物启事</a>
+  <a data-tab="found">失物招领</a>
+  <a data-tab="mine">我的发布</a>
+</div>
+
+<!-- Search -->
+<div class="m-search">
+  <div class="bar">
+    <span>🔍</span>
+    <input type="text" placeholder="搜索物品名称、地点...">
+  </div>
+</div>
+
+<div class="m-body tab-panels">
+
+  <!-- 寻物启事 -->
+  <div class="panel on" id="panel-seek">
+    <div class="post-item">
+      <div class="pi-img">🎒</div>
+      <div class="pi-body">
+        <div class="pi-name">黑色双肩背包</div>
+        <div class="pi-meta">📍 南校区图书馆三楼自习室<br>🕐 2026-05-15 下午约 16:00</div>
+        <div class="pi-foot">
+          <span class="m-st warn">寻找中</span>
+          <span class="muted">张同学 · 2小时前</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-item">
+      <div class="pi-img">🔑</div>
+      <div class="pi-body">
+        <div class="pi-name">宿舍钥匙（带蓝色挂绳）</div>
+        <div class="pi-meta">📍 升华广场附近<br>🕐 2026-05-14 中午</div>
+        <div class="pi-foot">
+          <span class="m-st warn">寻找中</span>
+          <span class="muted">李同学 · 昨天</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-item">
+      <div class="pi-img">📱</div>
+      <div class="pi-body">
+        <div class="pi-name">白色 iPhone 15 手机壳</div>
+        <div class="pi-meta">📍 二食堂一楼<br>🕐 2026-05-13 12:30</div>
+        <div class="pi-foot">
+          <span class="m-st ok">已找到</span>
+          <span class="muted">王同学 · 3天前</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-item">
+      <div class="pi-img">💳</div>
+      <div class="pi-body">
+        <div class="pi-name">校园卡（尾号 3456）</div>
+        <div class="pi-meta">📍 新校区教学楼 A 栋<br>🕐 2026-05-12 上午</div>
+        <div class="pi-foot">
+          <span class="m-st warn">寻找中</span>
+          <span class="muted">陈同学 · 4天前</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 失物招领 -->
+  <div class="panel" id="panel-found">
+    <div class="post-item">
+      <div class="pi-img">📓</div>
+      <div class="pi-body">
+        <div class="pi-name">笔记本（高数笔记）</div>
+        <div class="pi-meta">📍 在 A 栋 302 教室课桌内捡到<br>🕐 2026-05-15 18:00</div>
+        <div class="pi-foot">
+          <span class="m-badge m-badge-blue">待认领</span>
+          <span class="muted">刘同学 · 3小时前</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-item">
+      <div class="pi-img">🌂</div>
+      <div class="pi-body">
+        <div class="pi-name">黑色折叠雨伞</div>
+        <div class="pi-meta">📍 图书馆一楼大厅伞架<br>🕐 2026-05-14 14:00</div>
+        <div class="pi-foot">
+          <span class="m-badge m-badge-blue">待认领</span>
+          <span class="muted">赵同学 · 昨天</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-item">
+      <div class="pi-img">🎧</div>
+      <div class="pi-body">
+        <div class="pi-name">白色蓝牙耳机（AirPods）</div>
+        <div class="pi-meta">📍 体育馆羽毛球场 3 号场地<br>🕐 2026-05-13 20:00</div>
+        <div class="pi-foot">
+          <span class="m-st ok">已认领</span>
+          <span class="muted">孙同学 · 3天前</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-item">
+      <div class="pi-img">⌚</div>
+      <div class="pi-body">
+        <div class="pi-name">银色运动手表</div>
+        <div class="pi-meta">📍 操场跑道终点处<br>🕐 2026-05-12 07:30</div>
+        <div class="pi-foot">
+          <span class="m-badge m-badge-blue">待认领</span>
+          <span class="muted">周同学 · 4天前</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 我的发布 -->
+  <div class="panel" id="panel-mine">
+    <div class="mine-empty">
+      <div class="eic">📝</div>
+      <div style="font-size:14px;font-weight:600;color:#4E5969;margin-bottom:4px">暂无发布记录</div>
+      <div style="font-size:12px">点击右下角按钮发布寻物启事或失物招领</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="m-foot" style="padding:16px 14px">
+  © 2026 中南大学 智慧学工 AI 助手<br>产品原型 V1.0 · 仅演示用途
+</div>
+
+<!-- 浮动按钮 -->
+<button class="fab" onclick="alert('发布寻物/招领（演示）')" title="发布">＋</button>
+
+<div class="m-tabbar">
+  <a class="m-tab" href="../mobile-entry.html"><span class="tic">🏠</span>首页</a>
+  <a class="m-tab" href="student-schedule.html"><span class="tic">📅</span>课表</a>
+  <a class="m-tab" href="student-messages.html"><span class="tic">📨</span>消息</a>
+  <a class="m-tab" href="student-profile.html"><span class="tic">👤</span>我的</a>
+</div>
+
+<script src="../ai-client.js"></script>
+<script src="../ai-search-popup.js"></script>
+<script src="../ai-float-ball.js"></script>
+<script src="../ai-module-sdk.js"></script>
+<script>
+(function(){
+  var tabs = document.querySelectorAll('#lost-tabs a');
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(e){
+      e.preventDefault();
+      tabs.forEach(function(x){ x.classList.remove('on'); });
+      t.classList.add('on');
+      document.querySelectorAll('.tab-panels .panel').forEach(function(p){ p.classList.remove('on'); });
+      document.getElementById('panel-' + t.dataset.tab).classList.add('on');
+    });
+  });
+})();
+</script>
+</body>
+</html>
